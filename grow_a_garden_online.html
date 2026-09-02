@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grow a Garden Online - Omni Ultimate Edition v5.4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            user-select: none;
+        }
+        .garden-canvas {
+            background-color: #062016;
+            background-image: 
+                radial-gradient(rgba(16, 185, 129, 0.25) 1.5px, transparent 1.5px),
+                radial-gradient(rgba(16, 185, 129, 0.1) 1.5px, transparent 1.5px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        .crop-node {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .crop-node:hover {
+            transform: scale(1.25) translateY(-6px);
+            z-index: 30;
+        }
+        .aura-rainbow { animation: rainbowGlow 2s infinite linear; }
+        .aura-glitched { animation: glitchJitter 0.3s infinite; }
+        .aura-singularity { animation: singPulse 1.5s infinite ease-in-out; }
+        
+        @keyframes rainbowGlow {
+            0% { filter: drop-shadow(0 0 8px #ff0000); }
+            33% { filter: drop-shadow(0 0 8px #00ff00); }
+            66% { filter: drop-shadow(0 0 8px #0000ff); }
+            100% { filter: drop-shadow(0 0 8px #ff0000); }
+        }
+        @keyframes glitchJitter {
+            0% { transform: translate(0, 0); filter: drop-shadow(2px 0 0 #f00) drop-shadow(-2px 0 0 #0ff); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-1px, -1px); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes singPulse {
+            0%, 100% { filter: drop-shadow(0 0 12px #a855f7) scale(1); }
+            50% { filter: drop-shadow(0 0 24px #ec4899) scale(1.1); }
+        }
+        
+        .floating-text {
+            animation: floatUp 1s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(1.3); }
+        }
+
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen font-sans flex flex-col">
+
+    <!-- 상단 네비게이션 및 재화 표시 -->
+    <header class="bg-slate-900 border-b border-slate-700 p-4 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <h1 class="text-xl font-black text-emerald-400 flex items-center gap-2">
+                <i class="fa-solid fa-seedling"></i> Grow a Garden <span class="text-xs bg-gradient-to-r from-yellow-500 via-pink-500 to-purple-600 px-2.5 py-0.5 rounded text-white font-bold">Omni v5.4</span>
+            </h1>
+            <div class="flex items-center gap-2 sm:gap-3 text-sm flex-wrap">
+                <div class="bg-slate-950 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-coins text-yellow-400"></i>
+                    <span id="sheckles" class="font-bold text-yellow-300">20</span> <span class="text-xs text-yellow-500">S</span>
+                </div>
+                <div class="bg-slate-950 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-gem text-cyan-400"></i>
+                    <span id="gems" class="font-bold text-cyan-300">0</span> <span class="text-xs text-cyan-500">보석</span>
+                </div>
+                <div class="bg-slate-950 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-ticket text-purple-400"></i>
+                    <span id="tokens" class="font-bold text-purple-300">0</span> <span class="text-xs text-purple-500">토큰</span>
+                </div>
+                <button onclick="openExchangeModal()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1 shadow active:scale-95">
+                    <i class="fa-solid fa-right-left"></i> 보석 환전
+                </button>
+                <button onclick="openInviteModal()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1 shadow active:scale-95">
+                    <i class="fa-solid fa-link"></i> 링크 초대
+                </button>
+                <button onclick="openAdminLoginModal()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition flex items-center gap-1 shadow active:scale-95">
+                    <i class="fa-solid fa-shield-halved"></i> 관리자
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 탭 네비게이션 -->
+    <nav class="bg-slate-900/90 backdrop-blur border-b border-slate-800 p-2 overflow-x-auto">
+        <div class="max-w-7xl mx-auto flex justify-around text-sm font-semibold min-w-[900px] gap-2">
+            <button onclick="switchTab('garden')" id="btn-garden" class="tab-btn px-4 py-2 rounded-lg text-emerald-300 bg-emerald-950 border border-emerald-700 transition flex items-center gap-2">
+                <i class="fa-solid fa-tree"></i> 자유 배치 농장 (전체 씨앗)
+            </button>
+            <button onclick="switchTab('eggs')" id="btn-eggs" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition flex items-center gap-2">
+                <i class="fa-solid fa-egg"></i> 전종 알 부화장 (모든 펫 수록)
+            </button>
+            <button onclick="switchTab('pets')" id="btn-pets" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition flex items-center gap-2">
+                <i class="fa-solid fa-paw"></i> 펫 관리 & 변이 머신
+            </button>
+            <button onclick="switchTab('market')" id="btn-market" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition flex items-center gap-2">
+                <i class="fa-solid fa-store"></i> 펫 거래소
+            </button>
+            <button onclick="switchTab('chat')" id="btn-chat" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition flex items-center gap-2">
+                <i class="fa-solid fa-comments"></i> 온라인 실시간 채팅
+            </button>
+        </div>
+    </nav>
+
+    <!-- 콘텐츠 영역 -->
+    <main class="max-w-7xl w-full mx-auto p-4 flex-grow pb-24">
+        
+        <!-- 1. 정원 탭 -->
+        <div id="tab-garden" class="space-y-6">
+            <div class="bg-slate-900/70 border border-slate-700 p-4 rounded-2xl shadow-xl">
+                <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-lg font-bold text-slate-200">자유 배치 농장 (23종 전체 씨앗 풀 탑재)</h2>
+                        <span class="text-xs bg-emerald-950 px-2.5 py-1 rounded-full border border-emerald-800 text-emerald-300">자동 수확 및 변이 보너스</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs bg-slate-950 px-3 py-1.5 rounded-full border border-slate-700 text-cyan-300 shadow-inner">
+                            날씨: <span id="weather-status" class="font-bold text-yellow-400">맑음 (안정)</span>
+                        </span>
+                        <span class="text-xs text-slate-400 font-mono bg-slate-950 px-3 py-1.5 rounded-full border border-slate-800" id="weather-timer">변이까지: 15:00</span>
+                    </div>
+                </div>
+
+                <div class="text-xs text-slate-400 mb-2 font-bold flex justify-between items-center">
+                    <span>재배할 씨앗 선택:</span>
+                    <span class="text-emerald-400 text-[11px]" id="selected-seed-desc">선택됨: 당근 (비용: 10 S)</span>
+                </div>
+                <div id="seed-selector" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 mb-6 max-h-56 overflow-y-auto p-2 bg-slate-950 rounded-xl border border-slate-800 shadow-inner">
+                    <!-- 동적 생성 -->
+                </div>
+
+                <!-- 정원 캔버스 -->
+                <div id="garden-canvas" onclick="handleCanvasClick(event)" class="garden-canvas relative w-full h-[480px] bg-emerald-950/40 border-2 border-emerald-800/80 rounded-3xl overflow-hidden cursor-crosshair shadow-2xl flex items-center justify-center">
+                    <div id="canvas-hint" class="absolute text-emerald-400/60 text-sm font-bold pointer-events-none select-none text-center bg-slate-950/60 p-4 rounded-2xl border border-emerald-900/50 backdrop-blur-sm">
+                        🌱 위에서 씨앗을 선택한 후 정원을 클릭하여 씨앗을 심으세요!<br>
+                        <span class="text-xs text-slate-400">성장 완료 시 작물을 클릭해 수확하세요. 확률에 따라 일반, 실버, 골드, 레인보우 변이가 등장합니다.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 알 부화장 탭 -->
+        <div id="tab-eggs" class="hidden space-y-6">
+            <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl text-center shadow-xl">
+                <h2 class="text-xl font-bold text-slate-200 mb-1">전종 알 부화장 (10종 특수 에그 풀)</h2>
+                <p class="text-sm text-slate-400 mb-6">다양한 알에서 전설, 초월, 무지개 등급의 신비로운 펫을 부화시키세요!</p>
+                
+                <div id="egg-shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto mb-6">
+                    <!-- 동적 생성 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 펫 관리 & 변이 머신 탭 -->
+        <div id="tab-pets" class="hidden space-y-6">
+            <div class="bg-slate-900/80 border-2 border-purple-500/80 p-5 rounded-2xl shadow-2xl flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <h3 class="text-lg font-bold text-purple-300 flex items-center gap-2"><i class="fa-solid fa-flask"></i> 펫 유전자 변이 머신</h3>
+                    <p class="text-xs text-slate-400 mt-1">보유 중인 펫에게 레인보우, 글리치드, 싱귤래리티 등 최강의 돌연변이를 부여하세요.</p>
+                </div>
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <select id="mutation-pet-select" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-xs min-w-[220px] focus:outline-none focus:border-purple-500">
+                        <!-- 동적 생성 -->
+                    </select>
+                    <button onclick="tryMutatePet()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs whitespace-nowrap shadow transition active:scale-95">변이 주입 시도</button>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl shadow-xl">
+                <h2 class="text-xl font-bold text-slate-200 mb-4 flex items-center justify-between">
+                    <span>보유 중인 펫 목록</span>
+                    <span id="pet-count-badge" class="text-xs bg-purple-950 text-purple-300 border border-purple-800 px-3 py-1 rounded-full">0마리 보유</span>
+                </h2>
+                <div id="pets-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- 동적 생성 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. 토큰 거래소 탭 -->
+        <div id="tab-market" class="hidden space-y-6">
+            <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl shadow-xl">
+                <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-200">플레이어 펫 토큰 거래소</h2>
+                        <p class="text-xs text-slate-400 mt-0.5">희귀 펫을 토큰으로 자유롭게 거래하세요.</p>
+                    </div>
+                    <button onclick="openListingModal()" class="bg-purple-600 hover:bg-purple-500 text-white text-sm font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-1.5 active:scale-95">
+                        <i class="fa-solid fa-tag"></i> 내 펫 판매 등록
+                    </button>
+                </div>
+
+                <div id="market-listings" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <!-- 동적 생성 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 온라인 실시간 채팅 탭 -->
+        <div id="tab-chat" class="hidden space-y-4">
+            <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl flex flex-col h-[520px] shadow-xl">
+                <h2 class="text-xl font-bold text-slate-200 mb-3 flex items-center gap-2"><i class="fa-solid fa-comments text-emerald-400"></i> 온라인 실시간 서버 채팅</h2>
+                
+                <div id="chat-messages" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl p-4 overflow-y-auto space-y-3 text-sm mb-4 shadow-inner">
+                    <div class="text-slate-500 text-xs text-center py-1 border-b border-slate-900">--- 온라인 서버 Omni v5.4에 접속되었습니다 ---</div>
+                    <div class="flex gap-2">
+                        <span class="font-bold text-cyan-400">[농장주인_철수]:</span>
+                        <span class="text-slate-300">관리자 패널에 날씨 변이가 엄청 다양해져서 골라 쓰는 재미가 있네요!</span>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." onkeydown="if(event.key==='Enter') sendChatMessage()" class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
+                    <button onclick="sendChatMessage()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow active:scale-95">
+                        전송
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 링크 복사 및 초대 모달 -->
+    <div id="invite-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-slate-900 border border-cyan-500 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2"><i class="fa-solid fa-link"></i> 멀티플레이어 초대 링크</h3>
+            <input type="text" id="invite-link-input" readonly class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-cyan-300 text-xs">
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeInviteModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm">닫기</button>
+                <button onclick="copyInviteLink()" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-sm">링크 복사</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 보석 환전 모달 -->
+    <div id="exchange-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-slate-900 border border-amber-500 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-amber-400 flex items-center gap-2"><i class="fa-solid fa-right-left"></i> 보석 ➔ 토큰 환전</h3>
+            <p class="text-xs text-slate-400">보석 500개당 토큰 1개 (현재 보석: <span id="modal-gems" class="text-cyan-300 font-bold">0</span>)</p>
+            <div>
+                <input type="number" id="exchange-gem-input" value="500" min="500" step="500" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-sm focus:outline-none focus:border-amber-500">
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeExchangeModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm">취소</button>
+                <button onclick="confirmExchange()" class="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm">환전하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 관리자 인증 모달 -->
+    <div id="admin-login-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-slate-900 border border-red-500 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-red-400 flex items-center gap-2"><i class="fa-solid fa-lock"></i> 관리자 인증</h3>
+            <p class="text-xs text-slate-400">관리자 모드 접속 암호를 입력하세요.</p>
+            <input type="password" id="admin-password-input" placeholder="비밀번호 입력 (기본: admin)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-sm focus:outline-none focus:border-red-500">
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeAdminLoginModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm">취소</button>
+                <button onclick="verifyAdminPassword()" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 관리자 패널 모달 -->
+    <div id="admin-panel-modal" class="fixed inset-0 bg-black/85 hidden flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-slate-900 border-2 border-red-500 p-6 rounded-2xl max-w-xl w-full space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-lg font-bold text-red-400 flex items-center gap-2"><i class="fa-solid fa-screwdriver-wrench"></i> 서버 관리자 패널 (확장 날씨실)</h3>
+                <button onclick="closeAdminPanel()" class="text-slate-400 hover:text-white font-bold text-lg">&times;</button>
+            </div>
+            
+            <div class="space-y-2">
+                <label class="text-xs text-yellow-400 font-bold block">⚡ 강제 날씨 및 특수 변이 (전종 탑재)</label>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                    <button onclick="adminSetWeather('⚡ 썬더스톰 (Shocked - 100배)')" class="bg-amber-600 hover:bg-amber-500 text-white font-bold p-2.5 rounded-lg transition">⚡ 썬더스톰 (100배)</button>
+                    <button onclick="adminSetWeather('🪩 디스코 타임 (Disco - 125배)')" class="bg-purple-600 hover:bg-purple-500 text-white font-bold p-2.5 rounded-lg transition">🪩 디스코 (125배)</button>
+                    <button onclick="adminSetWeather('🌌 블랙홀 (Voidtouched - 135배)')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold p-2.5 rounded-lg transition">🌌 블랙홀 (135배)</button>
+                    <button onclick="adminSetWeather('🔥 솔라 플레어 (Solar - 150배)')" class="bg-red-600 hover:bg-red-500 text-white font-bold p-2.5 rounded-lg transition">🔥 솔라 (150배)</button>
+                    <button onclick="adminSetWeather('❄️ 프로즌 블자드 (Frozen - 110배)')" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold p-2.5 rounded-lg transition">❄️ 프로즌 (110배)</button>
+                    <button onclick="adminSetWeather('👑 마제스틱 오라 (Majestic - 200배)')" class="bg-pink-600 hover:bg-pink-500 text-white font-bold p-2.5 rounded-lg transition">👑 마제스틱 (200배)</button>
+                    <button onclick="adminSetWeather('💎 다이아몬드 (Diamond - 250배)')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold p-2.5 rounded-lg transition">💎 다이아 (250배)</button>
+                    <button onclick="adminSetWeather('👾 글리치드 (Glitched - 500배)')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-2.5 rounded-lg transition">👾 글리치드 (500배)</button>
+                    <button onclick="adminSetWeather('🌀 싱귤래리티 (Singularity - 1000배)')" class="bg-violet-600 hover:bg-violet-500 text-white font-bold p-2.5 rounded-lg transition">🌀 싱귤래리티 (1000배)</button>
+                    <button onclick="adminSetWeather('🌸 블라썸 스톰 (Blossom - 80배)')" class="bg-rose-600 hover:bg-rose-500 text-white font-bold p-2.5 rounded-lg transition">🌸 블라썸 (80배)</button>
+                    <button onclick="adminSetWeather('🌊 수중 가든 (Oceanic - 95배)')" class="bg-teal-600 hover:bg-teal-500 text-white font-bold p-2.5 rounded-lg transition">🌊 수중 가든 (95배)</button>
+                    <button onclick="adminSetWeather('🌠 슈팅스타 (Meteor - 300배)')" class="bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold p-2.5 rounded-lg transition">🌠 슈팅스타 (300배)</button>
+                    <button onclick="adminSetWeather('맑음 (안정)')" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold p-2.5 rounded-lg col-span-full border border-slate-700 transition">☀️ 날씨 초기화 (맑음)</button>
+                </div>
+            </div>
+
+            <div class="space-y-2 border-t border-slate-800 pt-3 text-sm">
+                <button onclick="adminGiveGold()" class="w-full bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold py-2.5 rounded-xl transition shadow">💰 골드 +1,000,000,000 지급</button>
+                <button onclick="adminGiveGems()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-xl transition shadow">💎 보석 +1,000,000 지급</button>
+                <button onclick="adminGiveTokens()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl transition shadow">🎟️ 토큰 +50,000 지급</button>
+                <button onclick="adminInstantGrow()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl transition shadow">🌱 모든 작물 즉시 성숙</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 판매 등록 모달 -->
+    <div id="listing-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-md w-full space-y-4 shadow-2xl">
+            <h3 class="text-lg font-bold text-slate-200">거래소에 펫 판매 등록</h3>
+            <div>
+                <label class="text-xs text-slate-400 mb-1 block">등록할 펫 선택:</label>
+                <select id="modal-pet-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-white text-sm focus:outline-none focus:border-purple-500"></select>
+            </div>
+            <div>
+                <label class="text-xs text-slate-400 mb-1 block">토큰 가격 설정:</label>
+                <input type="number" id="modal-token-price" value="50" min="1" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2 text-white text-sm focus:outline-none focus:border-purple-500">
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeListingModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm">취소</button>
+                <button onclick="confirmListing()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm">등록하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 토스트 -->
+    <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-800 border border-slate-600 text-white px-5 py-2.5 rounded-full shadow-2xl text-sm hidden transition-all z-50 pointer-events-none">
+        알림 메시지
+    </div>
+
+    <script>
+        let gameState = {
+            sheckles: 20,
+            gems: 0,
+            tokens: 0,
+            currentWeather: '맑음 (안정)',
+            weatherTimer: 900,
+            isWeatherActive: false,
+            lastSavedTime: Date.now(),
+            
+            seedsList: [
+                { type: 'carrot', name: '당근 (Common)', icon: '🥕', cost: 10, time: 2, baseVal: 30, xp: 10 },
+                { type: 'blueberry', name: '블루베리 (Common)', icon: '🫐', cost: 25, time: 3, baseVal: 75, xp: 20 },
+                { type: 'strawberry', name: '딸기 (Uncommon)', icon: '🍓', cost: 60, time: 5, baseVal: 190, xp: 50 },
+                { type: 'tomato', name: '토마토 (Rare)', icon: '🍅', cost: 130, time: 8, baseVal: 480, xp: 120 },
+                { type: 'bamboo', name: '대나무 (Rare)', icon: '🎋', cost: 220, time: 10, baseVal: 850, xp: 200 },
+                { type: 'mushroom', name: '버섯 (Epic)', icon: '🍄', cost: 380, time: 12, baseVal: 1600, xp: 350 },
+                { type: 'greenbean', name: '완두콩 (Epic)', icon: '🫛', cost: 650, time: 15, baseVal: 2950, xp: 600 },
+                { type: 'dragonfruit', name: '용과 (Legendary)', icon: '🐉', cost: 1300, time: 20, baseVal: 6300, xp: 1000 },
+                { type: 'acorn', name: '도토리 (Legendary)', icon: '🌰', cost: 2600, time: 25, baseVal: 12500, xp: 1800 },
+                { type: 'romanesco', name: '로만네스코 (Legendary)', icon: '🥦', cost: 4200, time: 28, baseVal: 21000, xp: 3000 },
+                { type: 'venus', name: '파리지옥 (Mythic)', icon: '🪴', cost: 5500, time: 30, baseVal: 30000, xp: 4000 },
+                { type: 'pomegranate', name: '석류 (Mythic)', icon: '🍎', cost: 11000, time: 35, baseVal: 68000, xp: 8000 },
+                { type: 'beanstalk', name: '빈스톡 (Prismatic)', icon: '🌱', cost: 22000, time: 45, baseVal: 160000, xp: 15000 },
+                { type: 'moonbloom', name: '달맞이꽃 (Prismatic)', icon: '🌙', cost: 48000, time: 50, baseVal: 370000, xp: 32000 },
+                { type: 'candy', name: '캔디 블라썸 (Event)', icon: '🍬', cost: 85000, time: 60, baseVal: 750000, xp: 60000 },
+                { type: 'ghostpepper', name: '고스트페퍼 (Event)', icon: '🌶️', cost: 160000, time: 70, baseVal: 1500000, xp: 120000 },
+                { type: 'bone', name: '본 블라썸 (Transcendent)', icon: '🦴', cost: 320000, time: 90, baseVal: 3200000, xp: 250000 },
+                { type: 'nebula_fruit', name: '네뷸라 프루트 (Transcendent)', icon: '🌌', cost: 1100000, time: 100, baseVal: 13000000, xp: 1000000 },
+                { type: 'solar_lotus', name: '솔라 로투스 (Godly)', icon: '🪷', cost: 5500000, time: 120, baseVal: 80000000, xp: 5000000 },
+                { type: 'galaxy_tree', name: '갤럭시 위핑트리 (Universe)', icon: '🌳', cost: 22000000, time: 150, baseVal: 380000000, xp: 25000000 },
+                { type: 'supernova_bloom', name: '슈퍼노바 블룸 (Infinite)', icon: '💥', cost: 80000000, time: 180, baseVal: 1600000000, xp: 100000000 },
+                { type: 'blackhole_root', name: '블랙홀 루트 (Singularity)', icon: '🕳️', cost: 350000000, time: 220, baseVal: 8500000000, xp: 500000000 },
+                { type: 'omega_fruit', name: '오메가 프루트 (Omni)', icon: '🪐', cost: 1000000000, time: 300, baseVal: 50000000000, xp: 2000000000 }
+            ],
+
+            eggsList: [
+                { id: 'normal', name: '일반 에그', cost: 10000, icon: '🥚', desc: '토끼, 달팽이 등 기본 펫 등장' },
+                { id: 'rare', name: '희귀 에그', cost: 50000, icon: '🥚', desc: '올빼미, 카피바라, 고양이 등' },
+                { id: 'mythic', name: '신화 에그', cost: 200000, icon: '🔮', desc: '라쿤, 우주 다람쥐, 유니콘 등' },
+                { id: 'prismatic', name: '프리즈매틱 알', cost: 800000, icon: '💎', desc: '키츠네, 자이언트 엘리펀트, 오징어' },
+                { id: 'rainbow', name: '레인보우 알', cost: 2000000, icon: '🌈', desc: '골드잠자리 및 무지개 특화' },
+                { id: 'winter', name: '겨울 크리스마스 에그', cost: 7500000, icon: '❄️', desc: '프로스트 드래곤, 아이스 서펜트 등' },
+                { id: 'solar', name: '솔라 알', cost: 20000000, icon: '☀️', desc: '네뷸라 드래곤, 솔라 드래곤 전용' },
+                { id: 'void', name: '보이드 에그', cost: 60000000, icon: '🕳️', desc: '새도우 레오파드, 블랙 드래곤 등' },
+                { id: 'transcendent', name: '초월 한정 에그', cost: 150000000, icon: '👑', desc: '제네시스 비, 코럽티드 키츠네!' },
+                { id: 'universe', name: '유니버스 궁극 알', cost: 500000000, icon: '🌌', desc: '갈락틱 드래곤, 오메가 피닉스 전용' }
+            ],
+
+            freePlants: [],
+            pets: [],
+            marketListings: [
+                { id: 101, seller: '농부마스터', petName: '하베스트 비틀', grade: 'Mythic', level: 150, abilityName: '정원 작물 자동 수확', price: 35 },
+                { id: 102, seller: '프로랭커', petName: '골드잠자리', grade: 'Prismatic', level: 300, abilityName: '수확 골드 5배 폭증', price: 50 },
+                { id: 103, seller: '제네시스왕', petName: '제네시스 비', grade: 'Transcendent', level: 500, abilityName: '초월 가치 극대화 (최상위)', price: 120 }
+            ]
+        };
+
+        gameState.selectedSeed = gameState.seedsList[0];
+
+        function loadGame() {
+            const savedData = localStorage.getItem('grow_a_garden_omni_v54_save');
+            if(savedData) {
+                try {
+                    const parsed = JSON.parse(savedData);
+                    gameState.sheckles = parsed.sheckles ?? 20;
+                    gameState.gems = parsed.gems ?? 0;
+                    gameState.tokens = parsed.tokens ?? 0;
+                    gameState.freePlants = parsed.freePlants ?? [];
+                    gameState.pets = parsed.pets ?? [];
+                    gameState.marketListings = parsed.marketListings ?? gameState.marketListings;
+                } catch(e) { console.error('로드 오류', e); }
+            }
+        }
+
+        function saveGame() {
+            gameState.lastSavedTime = Date.now();
+            localStorage.setItem('grow_a_garden_omni_v54_save', JSON.stringify(gameState));
+        }
+
+        setInterval(() => { saveGame(); }, 10000);
+
+        function switchTab(tabId) {
+            document.querySelectorAll('main > div').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-950', 'border', 'border-emerald-700', 'text-emerald-300');
+                btn.classList.add('text-slate-300');
+            });
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-emerald-950', 'border', 'border-emerald-700', 'text-emerald-300');
+                activeBtn.classList.remove('text-slate-300');
+            }
+
+            if(tabId === 'garden') { renderSeedSelector(); renderFreePlants(); }
+            if(tabId === 'eggs') renderEggShop();
+            if(tabId === 'pets') { renderPets(); updateMutationSelect(); }
+            if(tabId === 'market') renderMarket();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+
+        function updateUI() {
+            document.getElementById('sheckles').innerText = Math.floor(gameState.sheckles).toLocaleString();
+            document.getElementById('gems').innerText = Math.floor(gameState.gems).toLocaleString();
+            document.getElementById('tokens').innerText = Math.floor(gameState.tokens).toLocaleString();
+            document.getElementById('weather-status').innerText = gameState.currentWeather;
+
+            renderFreePlants();
+            saveGame();
+        }
+
+        function renderSeedSelector() {
+            const container = document.getElementById('seed-selector');
+            container.innerHTML = '';
+            
+            gameState.seedsList.forEach((seed) => {
+                const isSelected = gameState.selectedSeed.type === seed.type;
+                const btn = document.createElement('button');
+                btn.className = `p-2.5 rounded-xl border flex flex-col items-center justify-between transition text-xs ${isSelected ? 'bg-emerald-900/80 border-emerald-400 text-emerald-200 shadow-md ring-2 ring-emerald-500/50' : 'bg-slate-900 border-slate-800 text-slate-300 hover:border-slate-600'}`;
+                btn.onclick = () => {
+                    gameState.selectedSeed = seed;
+                    document.getElementById('selected-seed-desc').innerText = `선택됨: ${seed.name} (비용: ${seed.cost.toLocaleString()} S)`;
+                    renderSeedSelector();
+                };
+                btn.innerHTML = `
+                    <div class="text-xl mb-1">${seed.icon}</div>
+                    <div class="font-bold truncate w-full text-center text-[11px]">${seed.name.split(' ')[0]}</div>
+                    <div class="text-[10px] text-yellow-400 font-mono mt-0.5">${seed.cost.toLocaleString()} S</div>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function handleCanvasClick(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+            const seed = gameState.selectedSeed;
+            if(gameState.sheckles < seed.cost) {
+                showToast(`골드가 부족합니다! (필요: ${seed.cost.toLocaleString()} S)`);
+                return;
+            }
+
+            gameState.sheckles -= seed.cost;
+
+            // Mutation chance logic
+            const mutRoll = Math.random();
+            let mutType = 'normal';
+            let mutMult = 1;
+            let mutClass = '';
+
+            if(mutRoll < 0.001) { mutType = 'singularity'; mutMult = 1000; mutClass = 'aura-singularity'; }
+            else if(mutRoll < 0.005) { mutType = 'glitched'; mutMult = 200; mutClass = 'aura-glitched'; }
+            else if(mutRoll < 0.02) { mutType = 'rainbow'; mutMult = 50; mutClass = 'aura-rainbow'; }
+            else if(mutRoll < 0.08) { mutType = 'gold'; mutMult = 15; mutClass = 'drop-shadow-[0_0_8px_#eab308]'; }
+            else if(mutRoll < 0.20) { mutType = 'silver'; mutMult = 5; mutClass = 'drop-shadow-[0_0_6px_#cbd5e1]'; }
+
+            const newPlant = {
+                id: Date.now() + Math.random(),
+                type: seed.type,
+                name: seed.name,
+                icon: seed.icon,
+                x: Math.max(5, Math.min(92, x)),
+                y: Math.max(8, Math.min(88, y)),
+                plantedTime: Date.now(),
+                growTime: seed.time,
+                baseVal: seed.baseVal,
+                xp: seed.xp,
+                state: 'growing',
+                mutType: mutType,
+                mutMult: mutMult,
+                mutClass: mutClass
+            };
+
+            gameState.freePlants.push(newPlant);
+            updateUI();
+            
+            const hint = document.getElementById('canvas-hint');
+            if(hint) hint.classList.add('hidden');
+        }
+
+        function renderFreePlants() {
+            const canvas = document.getElementById('garden-canvas');
+            if(!canvas) return;
+
+            // Remove existing crop nodes
+            const existing = canvas.querySelectorAll('.crop-node');
+            existing.forEach(el => el.remove());
+
+            const now = Date.now();
+            gameState.freePlants.forEach(plant => {
+                const elapsed = (now - plant.plantedTime) / 1000;
+                const progress = Math.min(1, elapsed / plant.growTime);
+                
+                if(progress >= 1 && plant.state === 'growing') {
+                    plant.state = 'ready';
+                }
+
+                const node = document.createElement('div');
+                node.className = `crop-node absolute cursor-pointer flex flex-col items-center justify-center p-1 rounded-xl transition ${plant.mutClass}`;
+                node.style.left = `${plant.x}%`;
+                node.style.top = `${plant.y}%`;
+
+                let visualScale = 0.5 + progress * 0.7;
+                let opacity = 0.5 + progress * 0.5;
+
+                node.onclick = (e) => {
+                    e.stopPropagation();
+                    harvestPlant(plant, e.clientX, e.clientY);
+                };
+
+                let statusBadge = plant.state === 'ready' 
+                    ? `<span class="bg-emerald-500 text-slate-950 font-black text-[9px] px-1.5 py-0.2 rounded-full animate-bounce shadow">수확</span>`
+                    : `<div class="w-8 bg-slate-900 border border-slate-700 h-1.5 rounded-full overflow-hidden mt-0.5"><div class="bg-emerald-400 h-full" style="width:${progress*100}%"></div></div>`;
+
+                node.innerHTML = `
+                    <div style="transform: scale(${visualScale}); opacity: ${opacity}" class="text-2xl filter hover:brightness-125 transition">
+                        ${plant.icon}
+                    </div>
+                    ${statusBadge}
+                `;
+                canvas.appendChild(node);
+            });
+        }
+
+        function harvestPlant(plant, clientX, clientY) {
+            if(plant.state !== 'ready') return;
+
+            // Calculate weather multiplier
+            let weatherMult = 1;
+            if (gameState.currentWeather.includes('100배')) weatherMult = 100;
+            else if (gameState.currentWeather.includes('125배')) weatherMult = 125;
+            else if (gameState.currentWeather.includes('135배')) weatherMult = 135;
+            else if (gameState.currentWeather.includes('150배')) weatherMult = 150;
+            else if (gameState.currentWeather.includes('200배')) weatherMult = 200;
+            else if (gameState.currentWeather.includes('250배')) weatherMult = 250;
+            else if (gameState.currentWeather.includes('500배')) weatherMult = 500;
+            else if (gameState.currentWeather.includes('1000배')) weatherMult = 1000;
+            else if (gameState.currentWeather.includes('300배')) weatherMult = 300;
+
+            // Calculate active pet multiplier
+            let petMult = 1;
+            gameState.pets.forEach(p => {
+                if (p.equipped) petMult += (p.level * 0.1);
+            });
+
+            const finalEarnings = Math.floor(plant.baseVal * plant.mutMult * weatherMult * petMult);
+            gameState.sheckles += finalEarnings;
+
+            // Chance to drop gems
+            if (Math.random() < 0.25) {
+                const gemGain = Math.floor(1 + Math.random() * 5);
+                gameState.gems += gemGain;
+            }
+
+            // Remove plant
+            gameState.freePlants = gameState.freePlants.filter(p => p.id !== plant.id);
+
+            // Floating animation
+            spawnFloatingText(`+${finalEarnings.toLocaleString()} S`, clientX, clientY);
+            updateUI();
+        }
+
+        function spawnFloatingText(text, x, y) {
+            const el = document.createElement('div');
+            el.className = 'floating-text fixed font-black text-yellow-300 text-sm z-50 pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]';
+            el.innerText = text;
+            el.style.left = `${x - 20}px`;
+            el.style.top = `${y - 20}px`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
+
+        function renderEggShop() {
+            const grid = document.getElementById('egg-shop-grid');
+            grid.innerHTML = '';
+
+            gameState.eggsList.forEach(egg => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-950 border border-slate-800 hover:border-emerald-500/50 p-5 rounded-2xl flex flex-col justify-between items-center transition shadow-lg hover:shadow-emerald-950/40';
+                card.innerHTML = `
+                    <div class="text-4xl mb-2">${egg.icon}</div>
+                    <h3 class="font-bold text-slate-200 text-base mb-1">${egg.name}</h3>
+                    <p class="text-xs text-slate-400 mb-4 min-h-[32px] flex items-center justify-center">${egg.desc}</p>
+                    <button onclick="hatchEgg('${egg.id}')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-xl text-xs transition shadow active:scale-95">
+                        ${egg.cost.toLocaleString()} S 로 부화하기
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function hatchEgg(eggId) {
+            const egg = gameState.eggsList.find(e => e.id === eggId);
+            if(!egg) return;
+
+            if(gameState.sheckles < egg.cost) {
+                showToast(`골드가 부족합니다! (${egg.cost.toLocaleString()} S 필요)`);
+                return;
+            }
+
+            gameState.sheckles -= egg.cost;
+
+            const petNames = [
+                { name: '달팽이', grade: 'Common', icon: '🐌' },
+                { name: '카피바라', grade: 'Rare', icon: '🦫' },
+                { name: '우주 다람쥐', grade: 'Mythic', icon: '🐿️' },
+                { name: '키츠네 여우', grade: 'Prismatic', icon: '🦊' },
+                { name: '골드잠자리', grade: 'Prismatic', icon: '🪰' },
+                { name: '프로스트 드래곤', grade: 'Transcendent', icon: '🐉' },
+                { name: '제네시스 비', grade: 'Transcendent', icon: '🐝' },
+                { name: '오메가 피닉스', grade: 'Universe', icon: '🦅' }
+            ];
+
+            const picked = petNames[Math.floor(Math.random() * petNames.length)];
+            const newPet = {
+                id: Date.now() + Math.random(),
+                name: picked.name,
+                grade: picked.grade,
+                icon: picked.icon,
+                level: 1,
+                hunger: 100,
+                equipped: false,
+                mutation: 'Normal'
+            };
+
+            gameState.pets.push(newPet);
+            showToast(`🎉 축하합니다! [${newPet.grade}] ${newPet.name}을(를) 획득했습니다!`);
+            updateUI();
+        }
+
+        function renderPets() {
+            const list = document.getElementById('pets-list');
+            list.innerHTML = '';
+
+            document.getElementById('pet-count-badge').innerText = `${gameState.pets.length}마리 보유`;
+
+            if(gameState.pets.length === 0) {
+                list.innerHTML = `<div class="col-span-full text-center py-10 text-slate-500 text-sm">보유 중인 펫이 없습니다. 알 부화장에서 펫을 채집하세요!</div>`;
+                return;
+            }
+
+            gameState.pets.forEach(pet => {
+                const card = document.createElement('div');
+                card.className = `bg-slate-950 border ${pet.equipped ? 'border-emerald-500 bg-emerald-950/20' : 'border-slate-800'} p-4 rounded-2xl flex items-center justify-between gap-3 shadow transition`;
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-3xl">${pet.icon}</div>
+                        <div>
+                            <div class="font-bold text-sm text-slate-200 flex items-center gap-1.5">
+                                <span>${pet.name}</span>
+                                <span class="text-[10px] bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded-full">${pet.mutation}</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-0.5">Lv.${pet.level} | 포만감: ${Math.floor(pet.hunger)}%</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="feedPet(${pet.id})" class="bg-amber-600 hover:bg-amber-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs transition">먹이주기</button>
+                        <button onclick="toggleEquipPet(${pet.id})" class="${pet.equipped ? 'bg-red-600 hover:bg-red-500' : 'bg-emerald-600 hover:bg-emerald-500'} text-white font-bold px-3 py-1.5 rounded-xl text-xs transition">
+                            ${pet.equipped ? '해제' : '장착'}
+                        </button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function toggleEquipPet(petId) {
+            const pet = gameState.pets.find(p => p.id === petId);
+            if(pet) {
+                pet.equipped = !pet.equipped;
+                renderPets();
+                updateUI();
+            }
+        }
+
+        function feedPet(petId) {
+            const pet = gameState.pets.find(p => p.id === petId);
+            if(pet) {
+                if(gameState.sheckles < 50) {
+                    showToast('먹이 비용(50 S)이 부족합니다!');
+                    return;
+                }
+                gameState.sheckles -= 50;
+                pet.hunger = Math.min(100, pet.hunger + 30);
+                pet.level += 1;
+                showToast(`😋 ${pet.name}에게 먹이를 주었습니다! (Lv.${pet.level})`);
+                renderPets();
+                updateUI();
+            }
+        }
+
+        function updateMutationSelect() {
+            const select = document.getElementById('mutation-pet-select');
+            select.innerHTML = '';
+            gameState.pets.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.innerText = `${p.name} (Lv.${p.level}) - ${p.mutation}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function tryMutatePet() {
+            const select = document.getElementById('mutation-pet-select');
+            const petId = Number(select.value);
+            const pet = gameState.pets.find(p => p.id === petId);
+            if(!pet) {
+                showToast('변이시킬 펫을 선택하세요!');
+                return;
+            }
+
+            const mutations = ['🌈 Rainbow', '👾 Glitched', '🌀 Singularity', '🔥 Solar', '🌌 Void'];
+            const newMut = mutations[Math.floor(Math.random() * mutations.length)];
+            pet.mutation = newMut;
+            showToast(`⚡ ${pet.name}이(가) [${newMut}] 돌연변이로 성공적으로 개조되었습니다!`);
+            renderPets();
+            updateMutationSelect();
+        }
+
+        function renderMarket() {
+            const container = document.getElementById('market-listings');
+            container.innerHTML = '';
+
+            gameState.marketListings.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-950 border border-slate-800 p-4 rounded-2xl flex justify-between items-center shadow';
+                card.innerHTML = `
+                    <div>
+                        <div class="font-bold text-sm text-slate-200">${item.petName} <span class="text-xs text-purple-400">(${item.grade})</span></div>
+                        <div class="text-xs text-slate-400 mt-1">판매자: ${item.seller} | Lv.${item.level}</div>
+                    </div>
+                    <button onclick="buyMarketItem(${item.id}, ${item.price})" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow flex items-center gap-1 active:scale-95">
+                        <i class="fa-solid fa-ticket"></i> ${item.price} 토큰 구매
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function buyMarketItem(id, price) {
+            if(gameState.tokens < price) {
+                showToast('토큰이 부족합니다!');
+                return;
+            }
+            gameState.tokens -= price;
+            const item = gameState.marketListings.find(m => m.id === id);
+            if(item) {
+                gameState.pets.push({
+                    id: Date.now() + Math.random(),
+                    name: item.petName,
+                    grade: item.grade,
+                    icon: '🐾',
+                    level: item.level,
+                    hunger: 100,
+                    equipped: false,
+                    mutation: 'Rainbow'
+                });
+                gameState.marketListings = gameState.marketListings.filter(m => m.id !== id);
+                showToast(`🛍️ 거래소에서 ${item.petName}을(를) 구매했습니다!`);
+                renderMarket();
+                updateUI();
+            }
+        }
+
+        function openListingModal() {
+            const select = document.getElementById('modal-pet-select');
+            select.innerHTML = '';
+            gameState.pets.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.innerText = `${p.name} (Lv.${p.level})`;
+                select.appendChild(opt);
+            });
+            document.getElementById('listing-modal').classList.remove('hidden');
+        }
+        function closeListingModal() { document.getElementById('listing-modal').classList.add('hidden'); }
+        function confirmListing() {
+            const petId = Number(document.getElementById('modal-pet-select').value);
+            const price = Number(document.getElementById('modal-token-price').value);
+            const pet = gameState.pets.find(p => p.id === petId);
+
+            if(!pet || price <= 0) return;
+
+            gameState.marketListings.push({
+                id: Date.now(),
+                seller: '나(Player)',
+                petName: pet.name,
+                grade: pet.grade,
+                level: pet.level,
+                abilityName: '능력 증폭',
+                price: price
+            });
+
+            gameState.pets = gameState.pets.filter(p => p.id !== petId);
+            closeListingModal();
+            showToast('🏷️ 펫이 거래소에 판매 등록되었습니다!');
+            renderMarket();
+            updateUI();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const chatBox = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-2';
+            msgDiv.innerHTML = `<span class="font-bold text-yellow-400">[나]:</span> <span class="text-slate-200">${escapeHtml(text)}</span>`;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            input.value = '';
+
+            setTimeout(() => {
+                const userNames = ['농부_김씨', '토탈랭커', '초보농부99', '테크마스터', '유니콘사냥꾼'];
+                const replies = [
+                    '관리자 패널에 날씨 종류가 진짜 많아졌네요!',
+                    '슈팅스타 날씨 발동시키니까 수확 보상 대박입니다.',
+                    '오메가 피닉스 성능 최고예요.'
+                ];
+                const rName = userNames[Math.floor(Math.random() * userNames.length)];
+                const rText = replies[Math.floor(Math.random() * replies.length)];
+                const botDiv = document.createElement('div');
+                botDiv.className = 'flex gap-2';
+                botDiv.innerHTML = `<span class="font-bold text-cyan-400">[${rName}]:</span> <span class="text-slate-200">${rText}</span>`;
+                chatBox.appendChild(botDiv);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1200);
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function openExchangeModal() {
+            document.getElementById('modal-gems').innerText = gameState.gems.toLocaleString();
+            document.getElementById('exchange-modal').classList.remove('hidden');
+        }
+        function closeExchangeModal() { document.getElementById('exchange-modal').classList.add('hidden'); }
+        function confirmExchange() {
+            const gemAmount = Number(document.getElementById('exchange-gem-input').value);
+            if(gemAmount <= 0 || gemAmount % 500 !== 0) {
+                showToast('보석은 500개 단위로만 환전 가능합니다!');
+                return;
+            }
+            if(gameState.gems < gemAmount) {
+                showToast('보유 보석이 부족합니다!');
+                return;
+            }
+            gameState.gems -= gemAmount;
+            const tokenGain = gemAmount / 500;
+            gameState.tokens += tokenGain;
+            closeExchangeModal();
+            showToast(`✨ 보석 ${gemAmount.toLocaleString()}개 ➔ 토큰 ${tokenGain}개 환전 성공!`);
+            updateUI();
+        }
+
+        function openInviteModal() {
+            document.getElementById('invite-link-input').value = window.location.href;
+            document.getElementById('invite-modal').classList.remove('hidden');
+        }
+        function closeInviteModal() { document.getElementById('invite-modal').classList.add('hidden'); }
+        function copyInviteLink() {
+            const input = document.getElementById('invite-link-input');
+            input.select();
+            document.execCommand('copy');
+            showToast('📋 멀티플레이어 초대 링크가 클립보드에 복사되었습니다!');
+            closeInviteModal();
+        }
+
+        function openAdminLoginModal() { document.getElementById('admin-login-modal').classList.remove('hidden'); }
+        function closeAdminLoginModal() { document.getElementById('admin-login-modal').classList.add('hidden'); }
+        function verifyAdminPassword() {
+            const pass = document.getElementById('admin-password-input').value;
+            closeAdminLoginModal();
+            document.getElementById('admin-panel-modal').classList.remove('hidden');
+            showToast('🔓 관리자 모드로 접속했습니다.');
+        }
+        function closeAdminPanel() { document.getElementById('admin-panel-modal').classList.add('hidden'); }
+
+        function adminSetWeather(w) {
+            gameState.currentWeather = w;
+            showToast(`⚡ 관리자 권한으로 날씨가 [${w}] (으)로 설정되었습니다!`);
+            updateUI();
+        }
+        function adminGiveGold() { gameState.sheckles += 1000000000; updateUI(); showToast('💰 골드 10억 S 지급완료!'); }
+        function adminGiveGems() { gameState.gems += 1000000; updateUI(); showToast('💎 보석 100만 개 지급완료!'); }
+        function adminGiveTokens() { gameState.tokens += 50000; updateUI(); showToast('🎟️ 토큰 5만 개 지급완료!'); }
+        function adminInstantGrow() {
+            gameState.freePlants.forEach(p => p.state = 'ready');
+            updateUI();
+            showToast('🌱 농장의 모든 작물이 즉시 완전히 성숙했습니다!');
+        }
+
+        setInterval(() => {
+            if (gameState.weatherTimer > 0) {
+                gameState.weatherTimer--;
+                let m = Math.floor(gameState.weatherTimer / 60);
+                let s = gameState.weatherTimer % 60;
+                const timerEl = document.getElementById('weather-timer');
+                if(timerEl) timerEl.innerText = `변이까지: ${m}:${s < 10 ? '0' : ''}${s}`;
+            } else {
+                if (!gameState.isWeatherActive) {
+                    const weatherList = [
+                        '⚡ 썬더스톰 (Shocked - 100배)', 
+                        '🪩 디스코 타임 (Disco - 125배)', 
+                        '🌌 블랙홀 (Voidtouched - 135배)',
+                        '🔥 솔라 플레어 (Solar - 150배)',
+                        '❄️ 프로즌 블자드 (Frozen - 110배)',
+                        '👑 마제스틱 오라 (Majestic - 200배)',
+                        '💎 다이아몬드 (Diamond - 250배)',
+                        '👾 글리치드 (Glitched - 500배)',
+                        '🌀 싱귤래리티 (Singularity - 1000배)',
+                        '🌸 블라썸 스톰 (Blossom - 80배)',
+                        '🌊 수중 가든 (Oceanic - 95배)',
+                        '🌠 슈팅스타 (Meteor - 300배)'
+                    ];
+                    gameState.currentWeather = weatherList[Math.floor(Math.random() * weatherList.length)];
+                    gameState.isWeatherActive = true;
+                    gameState.weatherTimer = 300;
+                    showToast(`🚨 특수 날씨 변이 [${gameState.currentWeather}] 발동!`);
+                } else {
+                    gameState.currentWeather = '맑음 (안정)';
+                    gameState.isWeatherActive = false;
+                    gameState.weatherTimer = 900;
+                    showToast(`🌤️ 특수 날씨 변이가 사라졌습니다.`);
+                }
+            }
+
+            // Pet hunger decay
+            gameState.pets.forEach(pet => {
+                if (pet.equipped && pet.hunger > 0) {
+                    pet.hunger -= 0.05;
+                }
+            });
+
+            // Auto-harvest logic by equipped pets
+            const hasAutoHarvester = gameState.pets.some(p => p.equipped && p.hunger > 0);
+            if (hasAutoHarvester && gameState.freePlants.length > 0) {
+                const readyPlant = gameState.freePlants.find(p => p.state === 'ready');
+                if(readyPlant) {
+                    harvestPlant(readyPlant, window.innerWidth / 2, window.innerHeight / 2);
+                }
+            }
+
+            renderFreePlants();
+        }, 1000);
+
+        window.onload = function() {
+            loadGame();
+            renderSeedSelector();
+            updateUI();
+        };
+    </script>
+</body>
+</html>
