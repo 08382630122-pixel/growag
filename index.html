@@ -1063,5 +1063,39 @@
             }
         }, 1000);
     </script>
+    // 모달 열기 함수
+function openModal(modalId) {
+    const target = document.getElementById(modalId);
+    if (target) {
+        target.classList.remove('hidden');
+    }
+}
+
+// 모달 닫기 함수
+function closeModal(modalId) {
+    const target = document.getElementById(modalId);
+    if (target) {
+        target.classList.add('hidden');
+    }
+}
+
+// 관리자 인증 처리 함수
+function verifyAdmin() {
+    const pwInput = document.getElementById('admin-pw').value;
+    if (pwInput === 'taehoung') {
+        closeModal('admin-modal');
+        document.getElementById('admin-pw').value = '';
+        openModal('admin-panel');
+        if (typeof showToast === 'function') {
+            showToast('🔓 업그레이드된 관리자 패널 권한 획득!');
+        }
+    } else {
+        if (typeof showToast === 'function') {
+            showToast('❌ 비밀번호가 틀렸습니다!');
+        } else {
+            alert('❌ 비밀번호가 틀렸습니다!');
+        }
+    }
+}
 </body>
 </html>
