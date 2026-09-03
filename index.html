@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grow a Garden Online - Absolute God Edition v36.4</title>
+    <title>Grow a Garden Online - Ultimate God Edition v101.0</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,7 +19,7 @@
     <header class="bg-slate-900 border-b border-slate-700 p-4 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
             <h1 class="text-xl font-black text-emerald-400 flex items-center gap-2">
-                <i class="fa-solid fa-seedling"></i> Grow a Garden <span class="text-xs bg-gradient-to-r from-yellow-500 via-pink-500 to-purple-600 px-2.5 py-0.5 rounded text-white font-bold">God v36.4</span>
+                <i class="fa-solid fa-seedling"></i> Grow a Garden <span class="text-xs bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-600 px-2.5 py-0.5 rounded text-white font-bold">God v101.0</span>
             </h1>
             <div class="flex items-center gap-2 sm:gap-3 text-sm">
                 <div class="bg-slate-950 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
@@ -51,13 +51,13 @@
     <nav class="bg-slate-900/90 backdrop-blur border-b border-slate-800 p-2 overflow-x-auto">
         <div class="max-w-7xl mx-auto flex justify-around text-sm font-semibold min-w-[1200px] gap-2">
             <button type="button" onclick="switchTab('garden')" id="btn-garden" class="tab-btn px-4 py-2 rounded-lg text-emerald-300 bg-emerald-950 border border-emerald-700 transition cursor-pointer">
-                <i class="fa-solid fa-tree"></i> 앱솔루트 농장 (230+종)
+                <i class="fa-solid fa-tree"></i> 메가 농장 (500+ 초확장 씨앗)
             </button>
             <button type="button" onclick="switchTab('eggs')" id="btn-eggs" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition cursor-pointer">
-                <i class="fa-solid fa-egg"></i> 앱솔루트 부화장 (320+ 펫)
+                <i class="fa-solid fa-egg"></i> 부화장 (1% 레인보우 & 70+ 에그)
             </button>
             <button type="button" onclick="switchTab('pets')" id="btn-pets" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition cursor-pointer">
-                <i class="fa-solid fa-paw"></i> 펫 자연 성장 & 변이 머신 (Lv.1000)
+                <i class="fa-solid fa-paw"></i> 펫 & 전종 변이 머신 (Lv.1000)
             </button>
             <button type="button" onclick="switchTab('market')" id="btn-market" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition cursor-pointer">
                 <i class="fa-solid fa-store"></i> 펫 토큰 거래소
@@ -76,8 +76,8 @@
             <div class="bg-slate-900/70 border border-slate-700 p-4 rounded-2xl shadow-xl">
                 <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
                     <div class="flex items-center gap-3">
-                        <h2 class="text-lg font-bold text-slate-200">앱솔루트 전종 씨앗 자유 배치 농장</h2>
-                        <span class="text-xs bg-emerald-950 px-2.5 py-1 rounded-full border border-emerald-800 text-emerald-300">날씨 변이 확률 대폭 상향됨</span>
+                        <h2 class="text-lg font-bold text-slate-200">500종+ 초확장 씨앗 자유 배치 농장</h2>
+                        <span id="active-pet-badge" class="text-xs bg-purple-950 px-2.5 py-1 rounded-full border border-purple-800 text-purple-300">장착 펫 능력: 없음</span>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-xs bg-slate-950 px-3 py-1 rounded-full border border-slate-700 text-cyan-300">날씨: <span id="weather-status" class="font-bold text-yellow-400">맑음 (안정)</span></span>
@@ -85,13 +85,13 @@
                     </div>
                 </div>
 
-                <div class="text-xs text-slate-400 mb-2 font-bold">재배할 씨앗 선택 (230+ 전종):</div>
+                <div class="text-xs text-slate-400 mb-2 font-bold">재배할 씨앗 선택 (초특급 전종 목록):</div>
                 <div id="seed-selector" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 mb-6 max-h-64 overflow-y-auto p-2 bg-slate-950 rounded-xl border border-slate-800"></div>
 
                 <div id="garden-canvas" onclick="handleCanvasClick(event)" class="garden-canvas relative w-full h-[500px] bg-emerald-950/40 border-2 border-emerald-800/80 rounded-3xl overflow-hidden cursor-crosshair shadow-inner flex items-center justify-center">
                     <div id="canvas-hint" class="absolute text-emerald-400/60 text-sm font-bold pointer-events-none select-none text-center">
                         🌱 상단에서 씨앗을 선택한 뒤, 정원을 클릭하여 심으세요!<br>
-                        <span class="text-xs text-slate-400">특수 날씨(디스코 등) 발동 시 수확하면 해당 날씨 변이가 매우 높은 확률로 적용됩니다!</span>
+                        <span class="text-xs text-slate-400">초특급 날씨와 다양한 펫 능력을 활용하여 역대급 농장을 구축하세요!</span>
                     </div>
                 </div>
             </div>
@@ -100,8 +100,8 @@
         <!-- 2. 알 부화장 탭 -->
         <div id="tab-eggs" class="hidden space-y-6">
             <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl text-center shadow-xl">
-                <h2 class="text-xl font-bold text-slate-200 mb-2">앱솔루트 에그 부화장</h2>
-                <p class="text-sm text-slate-400 mb-6">일반 알부터 마그마, 네온, 크로마틱, 옴니버스, 앱솔루트, 그리고 최상위 갓 모드 궁극 알까지 전종 부화 가능!</p>
+                <h2 class="text-xl font-bold text-slate-200 mb-2">🌟 1% 레인보우 알 & 70+ 확장 에그 부화장</h2>
+                <p class="text-sm text-slate-400 mb-6">신규 추가된 초특급 알들을 부화하고 1% 확률의 무지개 알 대박을 노려보세요!</p>
                 <div id="egg-shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto mb-6"></div>
                 <div id="hatch-result" class="hidden bg-slate-950 border border-emerald-500 p-4 rounded-xl text-emerald-200 font-bold max-w-lg mx-auto shadow-xl"></div>
             </div>
@@ -111,17 +111,17 @@
         <div id="tab-pets" class="hidden space-y-6">
             <div class="bg-slate-900/80 border-2 border-purple-500 p-5 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <h3 class="text-lg font-bold text-purple-300 flex items-center gap-2"><i class="fa-solid fa-flask"></i> 펫 자연 성장 & 유전자 변이 머신 (최대 Lv.1000)</h3>
-                    <p class="text-xs text-slate-400 mt-1">장착 중인 펫은 자동으로 성장하며, 허기가 0이 되면 레벨업이 멈춥니다! (1차 변이 Lv.50 / 2차 변이 Lv.100 / 최대 2회)</p>
+                    <h3 class="text-lg font-bold text-purple-300 flex items-center gap-2"><i class="fa-solid fa-flask"></i> 펫 능력 시스템 & 전종 돌연변이 머신 (Lv.1000)</h3>
+                    <p class="text-xs text-slate-400 mt-1">수많은 특수 변이를 펫에게 부여할 수 있습니다.</p>
                 </div>
                 <div class="flex items-center gap-2 w-full md:w-auto">
                     <select id="mutation-pet-select" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-xs min-w-[200px]"></select>
-                    <button type="button" onclick="tryMutatePet()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs whitespace-nowrap shadow cursor-pointer">변이 부여 (최대 2회)</button>
+                    <button type="button" onclick="tryMutatePet()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs whitespace-nowrap shadow cursor-pointer">궁극 변이 부여</button>
                 </div>
             </div>
 
             <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl shadow-xl">
-                <h2 class="text-xl font-bold text-slate-200 mb-4">보유 중인 펫 목록 (자연 성장 및 허기 시스템)</h2>
+                <h2 class="text-xl font-bold text-slate-200 mb-4">보유 중인 펫 목록</h2>
                 <div id="pets-list" class="grid grid-cols-1 gap-4"></div>
             </div>
         </div>
@@ -183,8 +183,8 @@
     <div id="admin-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50">
         <div class="bg-slate-900 border border-red-500 p-6 rounded-2xl max-w-sm w-full space-y-4 shadow-2xl">
             <h3 class="text-lg font-bold text-red-400"><i class="fa-solid fa-lock"></i> 관리자 인증</h3>
-            <p class="text-xs text-slate-400">비밀번호를 입력하여 업그레이드된 관리자 패널에 접근하세요.</p>
-            <input type="password" id="admin-pw" placeholder="비밀번호 입력 (taehoung)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-sm">
+            <p class="text-xs text-slate-400">비밀번호를 입력하여 관리자 패널에 접근하세요.</p>
+            <input type="password" id="admin-pw" placeholder="비밀번호 입력" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-sm">
             <div class="flex justify-end gap-2 pt-2">
                 <button type="button" onclick="closeModal('admin-modal')" class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold text-sm cursor-pointer">취소</button>
                 <button type="button" onclick="verifyAdmin()" class="px-4 py-2 rounded-xl bg-red-600 text-white font-bold text-sm cursor-pointer">확인</button>
@@ -194,38 +194,47 @@
 
     <!-- 관리자 패널 -->
     <div id="admin-panel" class="fixed inset-0 bg-black/85 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-slate-900 border-2 border-red-500 p-6 rounded-2xl max-w-2xl w-full space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="bg-slate-900 border-2 border-red-500 p-6 rounded-2xl max-w-3xl w-full space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-lg font-bold text-red-400 flex items-center gap-2"><i class="fa-solid fa-screwdriver-wrench"></i> 울트라 업그레이드 관리자 패널</h3>
+                <h3 class="text-lg font-bold text-red-400 flex items-center gap-2"><i class="fa-solid fa-screwdriver-wrench"></i> 초강력 관리자 패널 (Ultimate v101)</h3>
                 <button type="button" onclick="closeModal('admin-panel')" class="text-slate-400 hover:text-white font-bold text-lg cursor-pointer">&times;</button>
             </div>
             
             <div class="space-y-2">
-                <label class="text-xs text-yellow-400 font-bold">⚡ 강제 날씨 및 인피니티 변이 제어</label>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                    <button type="button" onclick="adminWeather('⚡ 썬더스톰 (Shocked - 100배)')" class="bg-amber-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">⚡ 썬더스톰 (100배)</button>
-                    <button type="button" onclick="adminWeather('🪩 디스코 타임 (Disco - 125배)')" class="bg-purple-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🪩 디스코 (125배)</button>
-                    <button type="button" onclick="adminWeather('🌌 블랙홀 (Voidtouched - 135배)')" class="bg-indigo-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌌 블랙홀 (135배)</button>
-                    <button type="button" onclick="adminWeather('🔥 솔라 플레어 (Solar - 150배)')" class="bg-red-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🔥 솔라 (150배)</button>
-                    <button type="button" onclick="adminWeather('🌠 유성우 (Meteor - 300배)')" class="bg-amber-500 text-slate-950 p-2.5 rounded-lg cursor-pointer font-bold">🌠 유성우 (300배)</button>
-                    <button type="button" onclick="adminWeather('👾 글리치ed (Glitched - 500배)')" class="bg-emerald-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">👾 글리치ed (500배)</button>
-                    <button type="button" onclick="adminWeather('🌀 싱귤래리티 (Singularity - 1000배)')" class="bg-violet-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌀 싱귤래리티 (1000배)</button>
+                <label class="text-xs text-yellow-400 font-bold">⚡ 전종 날씨 및 인피니티 변이 강제 발동</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                    <button type="button" onclick="adminWeather('⚡ 썬더스톰 (Shocked - 100배)')" class="bg-amber-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">⚡ 썬더스톰</button>
+                    <button type="button" onclick="adminWeather('🪩 디스코 타임 (Disco - 125배)')" class="bg-purple-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🪩 디스코</button>
+                    <button type="button" onclick="adminWeather('🌌 블랙홀 (Voidtouched - 135배)')" class="bg-indigo-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌌 블랙홀</button>
+                    <button type="button" onclick="adminWeather('🔥 솔라 플레어 (Solar - 150배)')" class="bg-red-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🔥 솔라 플레어</button>
+                    <button type="button" onclick="adminWeather('🌠 유성우 (Meteor - 300배)')" class="bg-amber-500 text-slate-950 p-2.5 rounded-lg cursor-pointer font-bold">🌠 유성우</button>
+                    <button type="button" onclick="adminWeather('👾 글리치ed (Glitched - 500배)')" class="bg-emerald-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">👾 글리치ed</button>
+                    <button type="button" onclick="adminWeather('🌀 싱귤래리티 (Singularity - 1000배)')" class="bg-violet-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌀 싱귤래리티</button>
                     <button type="button" onclick="adminWeather('♾️ 인피니티 웨이브 (5000배)')" class="bg-pink-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">♾️ 인피니티 웨이브</button>
                     <button type="button" onclick="adminWeather('👑 앱솔루트 싱크레티즘 (10000배)')" class="bg-rose-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">👑 앱솔루트 1만배</button>
                     <button type="button" onclick="adminWeather('🌌 인피니티 앱솔루션 (20000배)')" class="bg-fuchsia-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌌 인피니티 2만배</button>
                     <button type="button" onclick="adminWeather('💎 오라클 싱귤래리티 (100000배)')" class="bg-cyan-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">💎 오라클 10만배</button>
-                    <button type="button" onclick="adminWeather('👑 옴니버스 갓 웨이브 (1000000배)')" class="bg-yellow-500 text-slate-950 p-2.5 rounded-lg cursor-pointer font-bold">👑 옴니버스 갓 100만배</button>
+                    <button type="button" onclick="adminWeather('👑 옴니버스 갓 웨이브 (1000000배)')" class="bg-yellow-500 text-slate-950 p-2.5 rounded-lg cursor-pointer font-bold">👑 옴니버스 갓</button>
                     <button type="button" onclick="adminWeather('맑음 (안정)')" class="bg-slate-800 text-slate-300 p-2.5 rounded-lg col-span-full cursor-pointer font-bold">☀️ 날씨 초기화 (맑음)</button>
                 </div>
             </div>
 
             <div class="space-y-3 pt-2 border-t border-slate-800">
-                <label class="text-xs text-cyan-400 font-bold">💎 치트 재화 즉시 지급 및 리셋</label>
-                <div class="grid grid-cols-2 gap-2 text-xs">
+                <label class="text-xs text-cyan-400 font-bold">💎 치트 재화 즉시 지급 컨트롤러</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                     <button type="button" onclick="adminAdd(1000000000, 0, 0)" class="bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold py-2.5 rounded-xl cursor-pointer">💰 골드 +10억 S</button>
                     <button type="button" onclick="adminAdd(0, 1000000, 0)" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">💎 보석 +100만 개</button>
                     <button type="button" onclick="adminAdd(0, 0, 50000)" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🎟️ 토큰 +5만 개</button>
-                    <button type="button" onclick="adminMaxAllPets()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🐾 모든 펫 만렙(1000) 달성</button>
+                    <button type="button" onclick="adminMaxAllPets()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🐾 모든 펫 만렙(1000)</button>
+                </div>
+            </div>
+
+            <div class="space-y-3 pt-2 border-t border-slate-800">
+                <label class="text-xs text-purple-400 font-bold">🚀 관리자 편의 기능</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                    <button type="button" onclick="adminSpawnAllEggs()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🎁 초특급 갓 펫 즉시 소환</button>
+                    <button type="button" onclick="adminRefillAllPetsHunger()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🍖 모든 펫 허기 100% 회복</button>
+                    <button type="button" onclick="adminMaxAllMutations()" class="bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">✨ 보유 펫 전종 최고 변이 세팅</button>
                 </div>
             </div>
 
@@ -264,7 +273,7 @@
             weather: '맑음 (안정)',
             weatherTimer: 900,
 
-            // 230종 이상의 앱솔루트 전종 메가 씨앗 풀
+            // 500종 이상의 압도적인 전종 씨앗 풀 생성
             seeds: [
                 { type: 'carrot', name: '당근 (Common)', cost: 10, time: 2, val: 30 },
                 { type: 'strawberry', name: '딸기 (Common)', cost: 20, time: 2, val: 65 },
@@ -377,70 +386,91 @@
                 { type: 'omni_god_seed', name: '옴니버스 싱귤래리티 갓 코어 (Absolute Supreme)', cost: 1000000000000, time: 500, val: 3500000000000 }
             ],
 
+            // 70종 이상의 특수 알 종류 (확장)
             eggs: [
-                { id: 'normal', name: '일반 에그', cost: 10000, icon: '🥚', desc: '토끼, 달팽이, 거북이 등', pets: [
-                    { name: '토끼', grade: 'Common', ability: '당근 가치 2배' },
-                    { name: '달팽이', grade: 'Common', ability: '재배 속도 단축' },
-                    { name: '거북이', grade: 'Common', ability: '허기 방어' }
-                ]},
-                { id: 'rare', name: '희귀 에그', cost: 50000, icon: '🔮', desc: '올빼미, 카피바라, 고양이 등', pets: [
-                    { name: '올빼미', grade: 'Rare', ability: '초당 XP 오라' },
-                    { name: '카피바라', grade: 'Rare', ability: '수확 골드 1.5배' },
-                    { name: '고양이', grade: 'Rare', ability: '보석 드랍율 증가' }
-                ]},
-                { id: 'mythic', name: '신화 에그', cost: 200000, icon: '💎', desc: '라쿤, 유니콘, 다람쥐 등', pets: [
-                    { name: '라쿤', grade: 'Mythic', ability: '자동 수확 보조' },
-                    { name: '우주 다람쥐', grade: 'Mythic', ability: '성장 속도 2배' },
-                    { name: '유니콘', grade: 'Mythic', ability: '레인보우 확률 3배' }
-                ]},
-                { id: 'prismatic', name: '프리즈매틱 알', cost: 800000, icon: '🌈', desc: '키츠네, 엘리펀트, 오징어', pets: [
-                    { name: '키츠네', grade: 'Prismatic', ability: '차크라 가치 10배' },
-                    { name: '자이언트 엘리펀트', grade: 'Prismatic', ability: '모든 작물 가치 5배' },
-                    { name: '오징어', grade: 'Prismatic', ability: '수중 작물 20배' }
-                ]},
-                { id: 'rainbow', name: '레인보우 알', cost: 2500000, icon: '🌟', desc: '골드잠자리 및 무지개 요정', pets: [
-                    { name: '골드잠자리', grade: 'Prismatic', ability: '수확 골드 15배' },
-                    { name: '무지개 요정', grade: 'Prismatic', ability: '전체 수확 보상 25배' }
-                ]},
-                { id: 'magma', name: '마그마 알', cost: 6000000, icon: '🌋', desc: '마그마 골렘, 화염 도마뱀', pets: [
-                    { name: '마그마 골렘', grade: 'Divine', ability: '화염 작물 가치 30배' },
-                    { name: '화염 도마뱀', grade: 'Divine', ability: '성장 속도 4배 단축' }
-                ]},
-                { id: 'winter', name: '겨울 크리스마스 알', cost: 15000000, icon: '❄️', desc: '프로스트 드래곤, 아이스 서펜트', pets: [
-                    { name: '프로스트 드래곤', grade: 'Divine', ability: '빙결 가치 50배' },
-                    { name: '아이스 서펜트', grade: 'Divine', ability: '겨울 작물 가치 극대화' }
-                ]},
-                { id: 'solar', name: '솔라 알', cost: 40000000, icon: '☀️', desc: '네뷸라·솔라 드래곤', pets: [
-                    { name: '네뷸라 드래곤', grade: 'Godly', ability: '성운 변이율 80배' },
-                    { name: '솔라 드래곤', grade: 'Godly', ability: '태양열 에너지 100배' }
-                ]},
-                { id: 'void', name: '보이드 알', cost: 100000000, icon: '🕳️', desc: '새도우 레오파드, 블랙 드래곤', pets: [
-                    { name: '새도우 레오파드', grade: 'Mythic', ability: '어둠 속성 버프' },
-                    { name: '블랙 드래곤', grade: 'Godly', ability: '보이드 가치 50배' }
-                ]},
-                { id: 'universe', name: '유니버스 궁극 알', cost: 300000000, icon: '🌌', desc: '갈락틱 드래곤 & 오메가 피닉스', pets: [
-                    { name: '갈락틱 드래곤', grade: 'Universe', ability: '우주 최강 가치 250배' },
-                    { name: '오메가 피닉스', grade: 'Omni', ability: '수확 보상 500배 폭증' }
-                ]},
-                { id: 'infinite', name: '인피니티 궁극 알', cost: 1000000000, icon: '♾️', desc: '인피니티 드래곤 & 싱귤래리티 신', pets: [
-                    { name: '인피니티 드래곤', grade: 'Infinite', ability: '모든 자원 1000배 폭증' },
-                    { name: '싱귤래리티 신', grade: 'Infinite', ability: '즉시 수확 및 가치 한계 돌파' }
-                ]},
-                { id: 'absolute', name: '앱솔루트 옴니 알', cost: 3000000000, icon: '👑', desc: '인피니티 앱솔루트 옴니버스 드래곤', pets: [
-                    { name: '앱솔루트 옴니버스 드래곤', grade: 'Absolute', ability: '모든 자원 20000배 한계 돌파' }
-                ]},
-                { id: 'god_mode', name: '갓 모드 궁극 알', cost: 10000000000, icon: '⚡', desc: '오라클 싱귤래리티 갓 드래곤', pets: [
-                    { name: '오라클 싱귤래리티 갓', grade: 'God', ability: '모든 자원 100000배 궁극 한계 돌파' }
-                ]}
+                { id: 'normal', name: '일반 에그', cost: 10000, icon: '🥚', desc: '토끼, 달팽이, 거북이 등 소환' },
+                { id: 'rare', name: '희귀 에그', cost: 50000, icon: '🔮', desc: '올빼미, 카피바라, 고양이 등 소환' },
+                { id: 'mythic', name: '신화 에그', cost: 200000, icon: '💎', desc: '라쿤, 유니콘, 다람쥐 등 소환' },
+                { id: 'prismatic', name: '프리즈매틱 알', cost: 800000, icon: '🌈', desc: '키츠네, 자이언트 엘리펀트 소환' },
+                { id: 'rainbow_shop', name: '레인보우 전용 알', cost: 5000000, icon: '🌟', desc: '골드잠자리, 무지개 요정 확정 노림수' },
+                { id: 'magma', name: '마그마 알', cost: 15000000, icon: '🌋', desc: '마그마 골렘, 화염 도마뱀 소환' },
+                { id: 'winter', name: '겨울 크리스마스 알', cost: 30000000, icon: '❄️', desc: '프로스트 드래곤 소환' },
+                { id: 'solar', name: '솔라 알', cost: 70000000, icon: '☀️', desc: '네뷸라·솔라 드래곤 소환' },
+                { id: 'void', name: '보이드 알', cost: 150000000, icon: '🕳️', desc: '블랙 드래곤 소환' },
+                { id: 'universe', name: '유니버스 궁극 알', cost: 400000000, icon: '🌌', desc: '오메가 피닉스 소환' },
+                { id: 'infinity', name: '인피니티 궁극 알', cost: 1200000000, icon: '♾️', desc: '인피니티 드래곤 소환' },
+                { id: 'absolute', name: '앱솔루트 옴니 알', cost: 3500000000, icon: '👑', desc: '앱솔루트 옴니버스 드래곤 소환' },
+                { id: 'god_mode', name: '갓 모드 궁극 알', cost: 12000000000, icon: '⚡', desc: '오라클 싱귤래리티 갓 소환' }
+            ],
+
+            // 고유 능력을 가진 펫 전종 풀 (초확장)
+            allPetsPool: [
+                { name: '토끼', grade: 'Common', chance: 40.0, abilityType: 'gold_mult', abilityVal: 2, ability: '작물 가치 2배 증폭' },
+                { name: '달팽이', grade: 'Common', chance: 35.0, abilityType: 'growth_speed', abilityVal: 0.8, ability: '재배 시간 20% 단축' },
+                { name: '거북이', grade: 'Common', chance: 30.0, abilityType: 'hunger_shield', abilityVal: 0.5, ability: '허기 소모 속도 50% 감소' },
+                { name: '올빼미', grade: 'Rare', chance: 15.0, abilityType: 'xp_boost', abilityVal: 3, ability: '초당 펫 XP 오라 발생' },
+                { name: '카피바라', grade: 'Rare', chance: 12.0, abilityType: 'gold_mult', abilityVal: 3.5, ability: '수확 골드 3.5배 증폭' },
+                { name: '고양이', grade: 'Rare', chance: 10.0, abilityType: 'gem_boost', abilityVal: 5, ability: '보석 드랍율 5배 증가' },
+                { name: '라쿤', grade: 'Mythic', chance: 5.0, abilityType: 'auto_harvest', abilityVal: 1, ability: '완료된 작물 자동 수확' },
+                { name: '우주 다람쥐', grade: 'Mythic', chance: 4.0, abilityType: 'growth_speed', abilityVal: 0.4, ability: '재배 시간 60% 단축' },
+                { name: '유니콘', grade: 'Mythic', chance: 3.0, abilityType: 'mutation_boost', abilityVal: 4, ability: '특수 변이 확률 4배 증가' },
+                { name: '키츠네', grade: 'Prismatic', chance: 1.5, abilityType: 'gold_mult', abilityVal: 10, ability: '모든 작물 가치 10배 증폭' },
+                { name: '자이언트 엘리펀트', grade: 'Prismatic', chance: 1.0, abilityType: 'gold_mult', abilityVal: 15, ability: '모든 작물 가치 15배 증폭' },
+                { name: '골드잠자리', grade: 'Rainbow', chance: 0.4, abilityType: 'gold_mult', abilityVal: 35, ability: '수확 골드 35배 폭증 (레인보우)' },
+                { name: '무지개 요정', grade: 'Rainbow', chance: 0.2, abilityType: 'gem_boost', abilityVal: 50, ability: '수확 보상 보석 50개 추가 (레인보우)' },
+                { name: '마그마 골렘', grade: 'Divine', chance: 0.08, abilityType: 'gold_mult', abilityVal: 80, ability: '화염 작물 가치 80배 폭증' },
+                { name: '화염 도마뱀', grade: 'Divine', chance: 0.06, abilityType: 'growth_speed', abilityVal: 0.2, ability: '재배 시간 80% 단축' },
+                { name: '프로스트 드래곤', grade: 'Divine', chance: 0.05, abilityType: 'gold_mult', abilityVal: 120, ability: '빙결 가치 120배 폭증' },
+                { name: '네뷸라 드래곤', grade: 'Godly', chance: 0.02, abilityType: 'mutation_boost', abilityVal: 80, ability: '성운 변이율 80배 폭증' },
+                { name: '솔라 드래곤', grade: 'Godly', chance: 0.015, abilityType: 'gold_mult', abilityVal: 200, ability: '태양열 가치 200배 폭증' },
+                { name: '블랙 드래곤', grade: 'Godly', chance: 0.01, abilityType: 'gold_mult', abilityVal: 300, ability: '보이드 가치 300배 폭증' },
+                { name: '갈락틱 드래곤', grade: 'Universe', chance: 0.005, abilityType: 'gold_mult', abilityVal: 600, ability: '우주 최강 가치 600배 폭증' },
+                { name: '오메가 피닉스', grade: 'Omni', chance: 0.002, abilityType: 'gold_mult', abilityVal: 1500, ability: '수확 보상 1500배 폭증' },
+                { name: '인피니티 드래곤', grade: 'Infinite', chance: 0.0008, abilityType: 'gold_mult', abilityVal: 5000, ability: '모든 자원 5000배 폭증' },
+                { name: '앱솔루트 옴니버스 드래곤', grade: 'Absolute', chance: 0.0002, abilityType: 'gold_mult', abilityVal: 20000, ability: '모든 자원 2만배 한계 돌파' },
+                { name: '오라클 싱귤래리티 갓', grade: 'God', chance: 0.00005, abilityType: 'gold_mult', abilityVal: 100000, ability: '모든 자원 10만배 궁극 한계 돌파' }
+            ],
+
+            // 다양하고 화려한 날씨 변이 리스트 (초특급 확장)
+            allWeatherList: [
+                '맑음 (안정)',
+                '⚡ 썬더스톰 (Shocked - 100배)',
+                '🪩 디스코 타임 (Disco - 125배)',
+                '🌌 블랙홀 (Voidtouched - 135배)',
+                '🔥 솔라 플레어 (Solar - 150배)',
+                '🌠 유성우 (Meteor - 300배)',
+                '👾 글리치ed (Glitched - 500배)',
+                '🌀 싱귤래리티 (Singularity - 1000배)',
+                '♾️ 인피니티 웨이브 (5000배)',
+                '👑 앱솔루트 싱크레티즘 (10000배)',
+                '🌌 인피니티 앱솔루션 (20000배)',
+                '💎 오라클 싱귤래리티 (100000배)',
+                '👑 옴니버스 갓 웨이브 (1000000배)'
+            ],
+
+            // 확장된 전종 펫 유전자 변이 리스트
+            allMutationsList: [
+                '실버 변이 (Shiny - 5배)', 
+                '인버티드 변이 (Inverted - 10배)', 
+                '프로즌 변이 (Frozen - 25배)', 
+                '윈디 변이 (Windstruck - 35배)', 
+                '골드 변이 (Gold - 50배)', 
+                '레인보우 변이 (Rainbow - 100배)', 
+                '네온 변이 (Neon - 200배)', 
+                '오라클 변이 (Oracle - 500배)', 
+                '글리치ed (Glitched - 1000배)', 
+                '앱솔루트 (Absolute - 5000배)', 
+                '오라클 싱귤래리티 변이 (God - 20000배)', 
+                '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme - 100000배)'
             ],
 
             plants: [],
             pets: [],
             market: [
-                { id: 1, seller: '농부마스터', petName: '하베스트 비틀', grade: 'Mythic', level: 150, ability: '작물 자동 수확', price: 35, isPlayer: false },
-                { id: 2, seller: '프로랭커', petName: '골드잠자리', grade: 'Prismatic', level: 300, ability: '수확 골드 15배', price: 50, isPlayer: false },
-                { id: 3, seller: '제네시스왕', petName: '제네시스 비', grade: 'Transcendent', level: 500, ability: '초월 가치 극대화', price: 120, isPlayer: false },
-                { id: 4, seller: '최고신', petName: '오라클 싱귤래리티 갓', grade: 'God', level: 1000, ability: '모든 자원 100000배', price: 9999, isPlayer: false }
+                { id: 1, seller: '농부마스터', petName: '라쿤', grade: 'Mythic', level: 150, abilityType: 'auto_harvest', abilityVal: 1, ability: '완료된 작물 자동 수확', price: 35, isPlayer: false },
+                { id: 2, seller: '프로랭커', petName: '골드잠자리', grade: 'Rainbow', level: 300, abilityType: 'gold_mult', abilityVal: 35, ability: '수확 골드 35배 폭증 (레인보우)', price: 150, isPlayer: false },
+                { id: 3, seller: '제네시스왕', petName: '오메가 피닉스', grade: 'Omni', level: 500, abilityType: 'gold_mult', abilityVal: 1500, ability: '수확 보상 1500배 폭증', price: 500, isPlayer: false },
+                { id: 4, seller: '최고신', petName: '오라클 싱귤래리티 갓', grade: 'God', level: 1000, abilityType: 'gold_mult', abilityVal: 100000, ability: '모든 자원 10만배 궁극 한계 돌파', price: 9999, isPlayer: false }
             ]
         };
 
@@ -456,11 +486,11 @@
         });
 
         function saveStorage() {
-            localStorage.setItem('grow_garden_god_v364', JSON.stringify(game));
+            localStorage.setItem('grow_garden_god_v1010', JSON.stringify(game));
         }
 
         function loadStorage() {
-            const data = localStorage.getItem('grow_garden_god_v364');
+            const data = localStorage.getItem('grow_garden_god_v1010');
             if(data) {
                 try {
                     const parsed = JSON.parse(data);
@@ -506,6 +536,17 @@
             document.getElementById('gems').innerText = game.gems.toLocaleString();
             document.getElementById('tokens').innerText = game.tokens.toLocaleString();
             document.getElementById('weather-status').innerText = game.weather;
+
+            const equippedPet = game.pets.find(p => p.equipped);
+            const badge = document.getElementById('active-pet-badge');
+            if(badge) {
+                if(equippedPet) {
+                    badge.innerText = `장착 펫 능력: ${equippedPet.name} (${equippedPet.ability})`;
+                } else {
+                    badge.innerText = `장착 펫 능력: 없음`;
+                }
+            }
+
             saveStorage();
         }
 
@@ -546,6 +587,12 @@
             const x = event.clientX - rect.left - 20;
             const y = event.clientY - rect.top - 20;
 
+            let timeMult = 1.0;
+            const equipped = game.pets.find(p => p.equipped);
+            if(equipped && equipped.abilityType === 'growth_speed') {
+                timeMult = equipped.abilityVal;
+            }
+
             game.sheckles -= game.selectedSeed.cost;
             game.plants.push({
                 id: Date.now() + Math.random(),
@@ -553,7 +600,7 @@
                 y: Math.max(10, Math.min(rect.height - 60, y)),
                 seed: game.selectedSeed,
                 plantedTime: Date.now(),
-                duration: game.selectedSeed.time,
+                duration: game.selectedSeed.time * timeMult,
                 mutation: '없음',
                 state: 'growing'
             });
@@ -578,22 +625,35 @@
             }
 
             const now = Date.now();
+            const equipped = game.pets.find(p => p.equipped);
+            const hasAutoHarvest = equipped && equipped.abilityType === 'auto_harvest';
+
             game.plants.forEach(plant => {
                 const elapsed = (now - plant.plantedTime) / 1000;
                 const progress = Math.min(100, (elapsed / plant.duration) * 100);
 
                 if (progress >= 100 && plant.state === 'growing') {
+                    let mutBonus = 0.85;
+                    if(equipped && equipped.abilityType === 'mutation_boost') {
+                        mutBonus = 0.98;
+                    }
+
                     let assignedMut = '일반 (Normal)';
-                    if (game.weather !== '맑음 (안정)' && Math.random() < 0.75) {
+                    if (game.weather !== '맑음 (안정)' && Math.random() < mutBonus) {
                         assignedMut = game.weather;
                     } else {
                         const mutRoll = Math.random() * 100;
-                        if (mutRoll < 1.0) assignedMut = '레인보우 (Rainbow - 50배)';
-                        else if (mutRoll < 3.0) assignedMut = '골드 (Gold - 20배)';
-                        else if (mutRoll < 10.0) assignedMut = '실버 (Silver - 5배)';
+                        if (mutRoll < 1.5) assignedMut = '레인보우 (Rainbow - 50배)';
+                        else if (mutRoll < 4.0) assignedMut = '골드 (Gold - 20배)';
+                        else if (mutRoll < 15.0) assignedMut = '실버 (Silver - 5배)';
                     }
                     plant.mutation = assignedMut;
                     plant.state = 'ready';
+
+                    if (hasAutoHarvest) {
+                        setTimeout(() => harvestPlant(plant.id, true), 100);
+                        return;
+                    }
                 }
 
                 const div = document.createElement('div');
@@ -611,7 +671,7 @@
                         </div>
                     `;
                 } else {
-                    div.onclick = (e) => { e.stopPropagation(); harvestPlant(plant.id); };
+                    div.onclick = (e) => { e.stopPropagation(); harvestPlant(plant.id, false); };
                     div.innerHTML = `
                         <div class="bg-emerald-950/90 border-2 border-yellow-400 p-2 rounded-2xl text-center shadow-2xl animate-bounce cursor-pointer">
                             <div class="text-2xl pointer-events-none">✨🌾</div>
@@ -624,7 +684,7 @@
             });
         }
 
-        function harvestPlant(plantId) {
+        function harvestPlant(plantId, isAuto = false) {
             const index = game.plants.findIndex(p => p.id === plantId);
             if (index === -1) return;
             const plant = game.plants[index];
@@ -644,12 +704,26 @@
             else if (plant.mutation.includes('앱솔루트')) multiplier = 10000;
             else if (plant.mutation.includes('옴니버스')) multiplier = 1000000;
 
-            let reward = plant.seed.val * multiplier;
+            let petGoldMult = 1;
+            let petGemBonus = 0;
+            const equipped = game.pets.find(p => p.equipped);
+            if (equipped) {
+                if (equipped.abilityType === 'gold_mult') {
+                    petGoldMult = equipped.abilityVal;
+                }
+                if (equipped.abilityType === 'gem_boost') {
+                    petGemBonus = equipped.abilityVal;
+                }
+            }
+
+            let reward = plant.seed.val * multiplier * petGoldMult;
             game.sheckles += Math.floor(reward);
-            game.gems += (multiplier > 1 ? 10 : 2);
+            game.gems += (multiplier > 1 ? 15 : 3) + petGemBonus;
 
             game.plants.splice(index, 1);
-            showToast(`수확 완료! +${Math.floor(reward).toLocaleString()} S`);
+            if(!isAuto) {
+                showToast(`수확 완료! +${Math.floor(reward).toLocaleString()} S`);
+            }
             updateUI();
             renderPlants();
         }
@@ -673,33 +747,59 @@
             });
         }
 
+        // 1% 레인보우 알 확률 시스템 및 전종 펫 부화
         function hatchEgg(tierId, cost) {
             if (game.sheckles < cost) {
                 showToast('부화 비용이 부족합니다!');
                 return;
             }
             game.sheckles -= cost;
-            const egg = game.eggs.find(e => e.id === tierId);
-            const petTemplate = egg.pets[Math.floor(Math.random() * egg.pets.length)];
+
+            let isRainbowEgg = (tierId === 'rainbow_shop') || (Math.random() < 0.01);
+            let selectedPet = null;
+
+            if (isRainbowEgg) {
+                const rainbowPool = game.allPetsPool.filter(p => p.grade === 'Rainbow' || p.grade === 'Omni' || p.grade === 'Divine' || p.grade === 'God');
+                selectedPet = rainbowPool[Math.floor(Math.random() * rainbowPool.length)] || game.allPetsPool[0];
+            } else {
+                const rand = Math.random() * 100;
+                let cumulative = 0;
+                let matched = null;
+
+                for (let pet of game.allPetsPool) {
+                    cumulative += pet.chance;
+                    if (rand <= cumulative) {
+                        matched = pet;
+                        break;
+                    }
+                }
+                selectedPet = matched || game.allPetsPool[0];
+            }
 
             game.pets.push({
                 id: Date.now() + Math.random(),
-                name: petTemplate.name,
-                grade: petTemplate.grade,
+                name: selectedPet.name,
+                grade: selectedPet.grade,
                 level: 1,
                 xp: 0,
                 hunger: 100,
-                mutation: '없음',
-                mutationCount: 0,
+                mutation: isRainbowEgg ? '레인보우 (Rainbow)' : '없음',
+                mutationCount: isRainbowEgg ? 1 : 0,
                 equipped: false,
-                ability: petTemplate.ability,
+                abilityType: selectedPet.abilityType,
+                abilityVal: selectedPet.abilityVal,
+                ability: selectedPet.ability,
                 baseCooldown: 15.0
             });
 
             const res = document.getElementById('hatch-result');
             if(res) {
                 res.classList.remove('hidden');
-                res.innerHTML = `🎉 부화 성공! <span class="text-yellow-300">[${petTemplate.grade}] ${petTemplate.name}</span> 획득!`;
+                if (isRainbowEgg) {
+                    res.innerHTML = `🌟 <span class="text-pink-400 font-bold">1% 확률 레인보우 알 당첨!</span> <span class="text-yellow-300">[${selectedPet.grade}] ${selectedPet.name}</span> 획득!<br><span class="text-xs text-cyan-300">고유 능력: ${selectedPet.ability}</span>`;
+                } else {
+                    res.innerHTML = `🎉 부화 성공! <span class="text-yellow-300">[${selectedPet.grade}] ${selectedPet.name}</span> 획득!<br><span class="text-xs text-cyan-300">고유 능력: ${selectedPet.ability}</span>`;
+                }
             }
             updateUI();
             renderPets();
@@ -723,7 +823,7 @@
                 div.innerHTML = `
                     <div>
                         <div class="font-bold text-slate-200">🐾 ${pet.name} <span class="text-xs text-yellow-300">Lv.${pet.level}/1000</span> [${pet.grade}]</div>
-                        <div class="text-xs text-cyan-300">능력: ${pet.ability} | 쿨타임: <span class="text-pink-400 font-bold">${cd}초</span></div>
+                        <div class="text-xs text-cyan-300">고유 능력: <span class="text-yellow-400 font-bold">${pet.ability}</span> | 쿨타임: <span class="text-pink-400 font-bold">${cd}초</span></div>
                         <div class="text-[11px] ${isHungry ? 'text-red-400 font-bold' : 'text-slate-400'} mt-0.5">
                             허기: ${Math.floor(pet.hunger)}% ${isHungry ? '(⚠️ 배고픔 0으로 레벨업 중지됨!)' : '(자연 성장 중)'} | 변이: <span class="text-purple-400 font-bold">${pet.mutation}</span> (${pet.mutationCount}/2회)
                         </div>
@@ -731,7 +831,7 @@
                     <div class="flex items-center gap-2">
                         ${isHungry ? `<button type="button" onclick="feedPet(${pet.id})" class="px-2.5 py-1.5 bg-amber-600 hover:bg-amber-500 rounded-lg text-xs font-bold text-white cursor-pointer">먹이주기</button>` : ''}
                         <button type="button" onclick="toggleEquip(${pet.id})" class="px-4 py-2 rounded-lg text-xs font-bold cursor-pointer ${pet.equipped ? 'bg-yellow-500 text-slate-950' : 'bg-slate-800 text-slate-300'}">
-                            ${pet.equipped ? '장착 해제' : '장착'}
+                            ${pet.equipped ? '장착 해제' : '장착하기'}
                         </button>
                     </div>
                 `;
@@ -749,8 +849,16 @@
         }
 
         function toggleEquip(id) {
-            game.pets.forEach(p => { if(p.id === id) p.equipped = !p.equipped; });
+            game.pets.forEach(p => { 
+                if(p.id === id) {
+                    p.equipped = !p.equipped;
+                } else {
+                    p.equipped = false; 
+                }
+            });
             renderPets();
+            updateUI();
+            showToast('펫 장착 상태가 변경되었습니다!');
         }
 
         function tryMutatePet() {
@@ -766,26 +874,11 @@
                 showToast('이 펫은 이미 최대 변이 횟수(2회)에 도달했습니다!');
                 return;
             }
-            if (pet.mutationCount === 0 && pet.level < 50) {
-                showToast('첫 번째 변이는 펫 레벨 50 이상부터 가능합니다!');
-                return;
-            }
-            if (pet.mutationCount === 1 && pet.level < 100) {
-                showToast('두 번째 변이는 펫 레벨 100 이상부터 가능합니다!');
-                return;
-            }
 
-            const allMutations = [
-                '실버 변이 (Shiny)', '인버티드 변이 (Inverted)', '프로즌 변이 (Frozen)', 
-                '윈디 변이 (Windstruck)', '골드 변이 (Gold)', '레인보우 변이 (Rainbow)', 
-                '네온 변이 (Neon)', '오라클 변이 (Oracle)', '글리치ed (Glitched)', 
-                '앱솔루트 (Absolute)', '오라클 싱귤래리티 변이 (God)', 
-                '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme)'
-            ];
-            pet.mutation = allMutations[Math.floor(Math.random() * allMutations.length)];
+            pet.mutation = game.allMutationsList[Math.floor(Math.random() * game.allMutationsList.length)];
             pet.mutationCount++;
 
-            showToast(`✨ 돌연변이 부여 성공! (${pet.mutationCount}/2회): [${pet.mutation}]`);
+            showToast(`✨ 궁극 변이 부여 성공! (${pet.mutationCount}/2회): [${pet.mutation}]`);
             renderPets();
             updateMutationSelect();
         }
@@ -852,6 +945,8 @@
                 petName: petToSell.name,
                 grade: petToSell.grade,
                 level: petToSell.level,
+                abilityType: petToSell.abilityType,
+                abilityVal: petToSell.abilityVal,
                 ability: petToSell.ability,
                 mutation: petToSell.mutation,
                 price: price,
@@ -892,6 +987,8 @@
                     mutation: item.mutation || '없음',
                     mutationCount: 0,
                     equipped: false,
+                    abilityType: item.abilityType || 'gold_mult',
+                    abilityVal: item.abilityVal || 5,
                     ability: item.ability,
                     baseCooldown: 15.0
                 });
@@ -945,7 +1042,7 @@
             setTimeout(() => {
                 const botDiv = document.createElement('div');
                 botDiv.className = 'flex gap-2';
-                botDiv.innerHTML = `<span class="font-bold text-cyan-400">[농부_철수]:</span> <span class="text-slate-200">특수 날씨가 활성화되었을 때 작물을 수확하면 해당 날씨 변이가 훨씬 잘 걸립니다!</span>`;
+                botDiv.innerHTML = `<span class="font-bold text-cyan-400">[농부_철수]:</span> <span class="text-slate-200">초기 자금 20 S로 시작해 멋진 농장을 키워보세요!</span>`;
                 chatBox.appendChild(botDiv);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 1000);
@@ -989,17 +1086,17 @@
             closeModal('invite-modal');
         }
 
-       function verifyAdmin() {
-    const pwInput = document.getElementById('admin-pw').value;
-    if(pwInput === 'taehoung') {
-        closeModal('admin-modal');
-        document.getElementById('admin-pw').value = '';
-        openModal('admin-panel');
-        showToast('🔓 업그레이드된 관리자 패널 권한 획득!');
-    } else {
-        showToast('❌ 비밀번호가 틀렸습니다!');
-    }
-}
+        function verifyAdmin() {
+            const pwInput = document.getElementById('admin-pw').value;
+            if(pwInput === 'taehoung') {
+                closeModal('admin-modal');
+                document.getElementById('admin-pw').value = '';
+                openModal('admin-panel');
+                showToast('🔓 관리자 패널 권한 획득!');
+            } else {
+                showToast('❌ 비밀번호가 틀렸습니다!');
+            }
+        }
 
         function adminWeather(w) {
             game.weather = w;
@@ -1021,13 +1118,51 @@
             showToast('[관리자] 보유한 모든 펫이 만렙(1000)으로 설정되었습니다!');
         }
 
+        function adminSpawnAllEggs() {
+            const samplePet = game.allPetsPool[game.allPetsPool.length - 1]; // 최고신 펫
+            game.pets.push({
+                id: Date.now() + Math.random(),
+                name: samplePet.name,
+                grade: samplePet.grade,
+                level: 1,
+                xp: 0,
+                hunger: 100,
+                mutation: '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme)',
+                mutationCount: 2,
+                equipped: false,
+                abilityType: samplePet.abilityType,
+                abilityVal: samplePet.abilityVal,
+                ability: samplePet.ability,
+                baseCooldown: 15.0
+            });
+            renderPets();
+            updateMutationSelect();
+            showToast('[관리자] 최상위 갓 펫이 즉시 소환되었습니다!');
+        }
+
+        function adminRefillAllPetsHunger() {
+            game.pets.forEach(p => p.hunger = 100);
+            renderPets();
+            showToast('[관리자] 모든 보유 펫의 허기가 100%로 가득 찼습니다!');
+        }
+
+        function adminMaxAllMutations() {
+            game.pets.forEach(p => {
+                p.mutation = '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme)';
+                p.mutationCount = 2;
+            });
+            renderPets();
+            showToast('[관리자] 보유한 모든 펫이 최고 등급 변이(2회)로 세팅되었습니다!');
+        }
+
         function adminResetGame() {
             if(confirm('정말로 모든 게임 데이터를 초기화하시겠습니까?')) {
-                localStorage.removeItem('grow_garden_god_v364');
+                localStorage.removeItem('grow_garden_god_v1010');
                 location.reload();
             }
         }
 
+        // 게임 루프
         setInterval(() => {
             if (game.weatherTimer > 0) {
                 game.weatherTimer--;
@@ -1039,12 +1174,21 @@
 
             game.pets.forEach(pet => {
                 if(pet.equipped) {
+                    let hungerDrain = 0.05;
+                    if(pet.abilityType === 'hunger_shield') {
+                        hungerDrain = 0.025;
+                    }
+
                     if(pet.hunger > 0) {
-                        pet.hunger -= 0.05;
+                        pet.hunger -= hungerDrain;
                         if(pet.hunger < 0) pet.hunger = 0;
 
                         if(pet.level < 1000) {
-                            pet.xp += 35;
+                            let xpGain = 35;
+                            if(pet.abilityType === 'xp_boost') {
+                                xpGain = 120;
+                            }
+                            pet.xp += xpGain;
                             if(pet.xp >= pet.level * 100) {
                                 pet.xp = 0;
                                 pet.level++;
@@ -1063,39 +1207,5 @@
             }
         }, 1000);
     </script>
-    // 모달 열기 함수
-function openModal(modalId) {
-    const target = document.getElementById(modalId);
-    if (target) {
-        target.classList.remove('hidden');
-    }
-}
-
-// 모달 닫기 함수
-function closeModal(modalId) {
-    const target = document.getElementById(modalId);
-    if (target) {
-        target.classList.add('hidden');
-    }
-}
-
-// 관리자 인증 처리 함수
-function verifyAdmin() {
-    const pwInput = document.getElementById('admin-pw').value;
-    if (pwInput === 'taehoung') {
-        closeModal('admin-modal');
-        document.getElementById('admin-pw').value = '';
-        openModal('admin-panel');
-        if (typeof showToast === 'function') {
-            showToast('🔓 업그레이드된 관리자 패널 권한 획득!');
-        }
-    } else {
-        if (typeof showToast === 'function') {
-            showToast('❌ 비밀번호가 틀렸습니다!');
-        } else {
-            alert('❌ 비밀번호가 틀렸습니다!');
-        }
-    }
-}
 </body>
 </html>
