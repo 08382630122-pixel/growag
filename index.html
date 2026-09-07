@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grow a Garden Online - Ultimate God Edition v101.0</title>
+    <title>Grow a Garden Online - Absolute Ultimate Edition v105.0</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,7 +19,7 @@
     <header class="bg-slate-900 border-b border-slate-700 p-4 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
             <h1 class="text-xl font-black text-emerald-400 flex items-center gap-2">
-                <i class="fa-solid fa-seedling"></i> Grow a Garden <span class="text-xs bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-600 px-2.5 py-0.5 rounded text-white font-bold">God v101.0</span>
+                <i class="fa-solid fa-seedling"></i> Grow a Garden <span class="text-xs bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-600 px-2.5 py-0.5 rounded text-white font-bold">Absolute v105.0 (300+ 확장)</span>
             </h1>
             <div class="flex items-center gap-2 sm:gap-3 text-sm">
                 <div class="bg-slate-950 px-3 py-1.5 rounded-full border border-slate-700 flex items-center gap-1.5">
@@ -51,13 +51,13 @@
     <nav class="bg-slate-900/90 backdrop-blur border-b border-slate-800 p-2 overflow-x-auto">
         <div class="max-w-7xl mx-auto flex justify-around text-sm font-semibold min-w-[1200px] gap-2">
             <button type="button" onclick="switchTab('garden')" id="btn-garden" class="tab-btn px-4 py-2 rounded-lg text-emerald-300 bg-emerald-950 border border-emerald-700 transition cursor-pointer">
-                <i class="fa-solid fa-tree"></i> 메가 농장 (500+ 초확장 씨앗)
+                <i class="fa-solid fa-tree"></i> 메가 농장 (초고가 씨앗 320종+)
             </button>
             <button type="button" onclick="switchTab('eggs')" id="btn-eggs" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition cursor-pointer">
-                <i class="fa-solid fa-egg"></i> 부화장 (1% 레인보우 & 70+ 에그)
+                <i class="fa-solid fa-egg"></i> 부화장 (초특급 테마 에그 150종+)
             </button>
             <button type="button" onclick="switchTab('pets')" id="btn-pets" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition cursor-pointer">
-                <i class="fa-solid fa-paw"></i> 펫 & 전종 변이 머신 (Lv.1000)
+                <i class="fa-solid fa-paw"></i> 펫 & 전종 변이 머신 (200+ 변이 완비)
             </button>
             <button type="button" onclick="switchTab('market')" id="btn-market" class="tab-btn px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition cursor-pointer">
                 <i class="fa-solid fa-store"></i> 펫 토큰 거래소
@@ -76,7 +76,7 @@
             <div class="bg-slate-900/70 border border-slate-700 p-4 rounded-2xl shadow-xl">
                 <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
                     <div class="flex items-center gap-3">
-                        <h2 class="text-lg font-bold text-slate-200">500종+ 초확장 씨앗 자유 배치 농장</h2>
+                        <h2 class="text-lg font-bold text-slate-200">그어가 전종 초고가 씨앗 전체 배치 농장</h2>
                         <span id="active-pet-badge" class="text-xs bg-purple-950 px-2.5 py-1 rounded-full border border-purple-800 text-purple-300">장착 펫 능력: 없음</span>
                     </div>
                     <div class="flex items-center gap-3">
@@ -85,13 +85,13 @@
                     </div>
                 </div>
 
-                <div class="text-xs text-slate-400 mb-2 font-bold">재배할 씨앗 선택 (초특급 전종 목록):</div>
+                <div class="text-xs text-slate-400 mb-2 font-bold">재배할 씨앗 선택 (초고가 마스터 320+ 목록):</div>
                 <div id="seed-selector" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 mb-6 max-h-64 overflow-y-auto p-2 bg-slate-950 rounded-xl border border-slate-800"></div>
 
                 <div id="garden-canvas" onclick="handleCanvasClick(event)" class="garden-canvas relative w-full h-[500px] bg-emerald-950/40 border-2 border-emerald-800/80 rounded-3xl overflow-hidden cursor-crosshair shadow-inner flex items-center justify-center">
                     <div id="canvas-hint" class="absolute text-emerald-400/60 text-sm font-bold pointer-events-none select-none text-center">
                         🌱 상단에서 씨앗을 선택한 뒤, 정원을 클릭하여 심으세요!<br>
-                        <span class="text-xs text-slate-400">초특급 날씨와 다양한 펫 능력을 활용하여 역대급 농장을 구축하세요!</span>
+                        <span class="text-xs text-slate-400">v105.0 업데이트: 아스트랄 코어, 멀티버스 싱귤래리티, 울트라 신규 씨앗 100종 추가 완료!</span>
                     </div>
                 </div>
             </div>
@@ -100,8 +100,8 @@
         <!-- 2. 알 부화장 탭 -->
         <div id="tab-eggs" class="hidden space-y-6">
             <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl text-center shadow-xl">
-                <h2 class="text-xl font-bold text-slate-200 mb-2">🌟 1% 레인보우 알 & 70+ 확장 에그 부화장</h2>
-                <p class="text-sm text-slate-400 mb-6">신규 추가된 초특급 알들을 부화하고 1% 확률의 무지개 알 대박을 노려보세요!</p>
+                <h2 class="text-xl font-bold text-slate-200 mb-2">🌟 초고가 알 부화장 (150+ 테마 에그)</h2>
+                <p class="text-sm text-slate-400 mb-6">아스트랄 게이트웨이, 멀티버스 웜홀, 무한대 코스모스 알 테마 추가 구현!</p>
                 <div id="egg-shop-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto mb-6"></div>
                 <div id="hatch-result" class="hidden bg-slate-950 border border-emerald-500 p-4 rounded-xl text-emerald-200 font-bold max-w-lg mx-auto shadow-xl"></div>
             </div>
@@ -111,12 +111,12 @@
         <div id="tab-pets" class="hidden space-y-6">
             <div class="bg-slate-900/80 border-2 border-purple-500 p-5 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
-                    <h3 class="text-lg font-bold text-purple-300 flex items-center gap-2"><i class="fa-solid fa-flask"></i> 펫 능력 시스템 & 전종 돌연변이 머신 (Lv.1000)</h3>
-                    <p class="text-xs text-slate-400 mt-1">수많은 특수 변이를 펫에게 부여할 수 있습니다.</p>
+                    <h3 class="text-lg font-bold text-purple-300 flex items-center gap-2"><i class="fa-solid fa-flask"></i> 펫 능력 시스템 & 초고급 200종+ 변이 머신 (Lv.1000)</h3>
+                    <p class="text-xs text-slate-400 mt-1">아스트랄 하이퍼노바, 멀티버스 앱솔루션 등 200가지 이상의 최상위 궁극 변이를 자유롭게 부여하세요.</p>
                 </div>
                 <div class="flex items-center gap-2 w-full md:w-auto">
                     <select id="mutation-pet-select" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white text-xs min-w-[200px]"></select>
-                    <button type="button" onclick="tryMutatePet()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs whitespace-nowrap shadow cursor-pointer">궁극 변이 부여</button>
+                    <button type="button" onclick="tryMutatePet()" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs whitespace-nowrap shadow cursor-pointer">200+ 변이 랜덤 부여</button>
                 </div>
             </div>
 
@@ -144,7 +144,7 @@
             <div class="bg-slate-900/70 border border-slate-700 p-6 rounded-2xl flex flex-col h-[520px] shadow-xl">
                 <h2 class="text-xl font-bold text-slate-200 mb-3 flex items-center gap-2"><i class="fa-solid fa-comments text-emerald-400"></i> 실시간 서버 대화</h2>
                 <div id="chat-messages" class="flex-grow bg-slate-950 border border-slate-800 rounded-xl p-4 overflow-y-auto space-y-3 text-sm mb-4">
-                    <div class="text-slate-500 text-xs text-center">--- 온라인 서버에 연결되었습니다 ---</div>
+                    <div class="text-slate-500 text-xs text-center">--- 온라인 서버에 연결되었습니다 (v105.0) ---</div>
                 </div>
                 <div class="flex gap-2">
                     <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." onkeydown="if(event.key==='Enter') sendChatMessage()" class="flex-grow bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500">
@@ -196,35 +196,37 @@
     <div id="admin-panel" class="fixed inset-0 bg-black/85 hidden flex items-center justify-center p-4 z-50">
         <div class="bg-slate-900 border-2 border-red-500 p-6 rounded-2xl max-w-3xl w-full space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-lg font-bold text-red-400 flex items-center gap-2"><i class="fa-solid fa-screwdriver-wrench"></i> 초강력 관리자 패널 (Ultimate v101)</h3>
+                <h3 class="text-lg font-bold text-red-400 flex items-center gap-2"><i class="fa-solid fa-screwdriver-wrench"></i> 절대 관리자 패널 (v105.0 확장)</h3>
                 <button type="button" onclick="closeModal('admin-panel')" class="text-slate-400 hover:text-white font-bold text-lg cursor-pointer">&times;</button>
             </div>
             
             <div class="space-y-2">
-                <label class="text-xs text-yellow-400 font-bold">⚡ 전종 날씨 및 인피니티 변이 강제 발동</label>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                    <button type="button" onclick="adminWeather('⚡ 썬더스톰 (Shocked - 100배)')" class="bg-amber-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">⚡ 썬더스톰</button>
-                    <button type="button" onclick="adminWeather('🪩 디스코 타임 (Disco - 125배)')" class="bg-purple-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🪩 디스코</button>
-                    <button type="button" onclick="adminWeather('🌌 블랙홀 (Voidtouched - 135배)')" class="bg-indigo-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌌 블랙홀</button>
-                    <button type="button" onclick="adminWeather('🔥 솔라 플레어 (Solar - 150배)')" class="bg-red-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🔥 솔라 플레어</button>
-                    <button type="button" onclick="adminWeather('🌠 유성우 (Meteor - 300배)')" class="bg-amber-500 text-slate-950 p-2.5 rounded-lg cursor-pointer font-bold">🌠 유성우</button>
-                    <button type="button" onclick="adminWeather('👾 글리치ed (Glitched - 500배)')" class="bg-emerald-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">👾 글리치ed</button>
-                    <button type="button" onclick="adminWeather('🌀 싱귤래리티 (Singularity - 1000배)')" class="bg-violet-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌀 싱귤래리티</button>
-                    <button type="button" onclick="adminWeather('♾️ 인피니티 웨이브 (5000배)')" class="bg-pink-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">♾️ 인피니티 웨이브</button>
-                    <button type="button" onclick="adminWeather('👑 앱솔루트 싱크레티즘 (10000배)')" class="bg-rose-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">👑 앱솔루트 1만배</button>
-                    <button type="button" onclick="adminWeather('🌌 인피니티 앱솔루션 (20000배)')" class="bg-fuchsia-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">🌌 인피니티 2만배</button>
-                    <button type="button" onclick="adminWeather('💎 오라클 싱귤래리티 (100000배)')" class="bg-cyan-600 text-white p-2.5 rounded-lg cursor-pointer font-bold">💎 오라클 10만배</button>
-                    <button type="button" onclick="adminWeather('👑 옴니버스 갓 웨이브 (1000000배)')" class="bg-yellow-500 text-slate-950 p-2.5 rounded-lg cursor-pointer font-bold">👑 옴니버스 갓</button>
-                    <button type="button" onclick="adminWeather('맑음 (안정)')" class="bg-slate-800 text-slate-300 p-2.5 rounded-lg col-span-full cursor-pointer font-bold">☀️ 날씨 초기화 (맑음)</button>
+                <label class="text-xs text-yellow-400 font-bold">⚡ 전종 아스트랄 날씨 및 재난 강제 발동</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs max-h-40 overflow-y-auto p-1 bg-slate-950 rounded border border-slate-800">
+                    <button type="button" onclick="adminWeather('⚡ 썬더스톰 (100배)')" class="bg-amber-600 text-white p-2 rounded cursor-pointer font-bold">⚡ 썬더스톰</button>
+                    <button type="button" onclick="adminWeather('🪩 디스코 타임 (125배)')" class="bg-purple-600 text-white p-2 rounded cursor-pointer font-bold">🪩 디스코</button>
+                    <button type="button" onclick="adminWeather('🌌 블랙홀 (135배)')" class="bg-indigo-600 text-white p-2 rounded cursor-pointer font-bold">🌌 블랙홀</button>
+                    <button type="button" onclick="adminWeather('🔥 솔라 플레어 (150배)')" class="bg-red-600 text-white p-2 rounded cursor-pointer font-bold">🔥 솔라 플레어</button>
+                    <button type="button" onclick="adminWeather('🌠 유성우 (300배)')" class="bg-amber-500 text-slate-950 p-2 rounded cursor-pointer font-bold">🌠 유성우</button>
+                    <button type="button" onclick="adminWeather('👾 글리치ed (500배)')" class="bg-emerald-600 text-white p-2 rounded cursor-pointer font-bold">👾 글리치ed</button>
+                    <button type="button" onclick="adminWeather('🌀 싱귤래리티 (1,000배)')" class="bg-violet-600 text-white p-2 rounded cursor-pointer font-bold">🌀 싱귤래리티</button>
+                    <button type="button" onclick="adminWeather('♾️ 인피니티 웨이브 (5,000배)')" class="bg-pink-600 text-white p-2 rounded cursor-pointer font-bold">♾️ 인피니티</button>
+                    <button type="button" onclick="adminWeather('👑 앱솔루트 싱크레티즘 (10,000배)')" class="bg-rose-600 text-white p-2 rounded cursor-pointer font-bold">👑 앱솔루트 1만</button>
+                    <button type="button" onclick="adminWeather('🌌 하이퍼스페이스 웜홀 (50,000배)')" class="bg-cyan-600 text-white p-2 rounded cursor-pointer font-bold">🌌 웜홀 5만배</button>
+                    <button type="button" onclick="adminWeather('💎 메타버스 오라클 싱크 (100,000배)')" class="bg-blue-600 text-white p-2 rounded cursor-pointer font-bold">💎 메타오라클 10만</button>
+                    <button type="button" onclick="adminWeather('👑 옴니버스 갓 싱귤래리티 (1,000,000배)')" class="bg-yellow-500 text-slate-950 p-2 rounded cursor-pointer font-bold">👑 옴니갓 100만</button>
+                    <button type="button" onclick="adminWeather('🌟 트루 파이널 인피니티 (10,000,000배)')" class="bg-fuchsia-600 text-white p-2 rounded cursor-pointer font-bold">🌟 인피니티 1천만</button>
+                    <button type="button" onclick="adminWeather('🌌 아스트랄 멀티버스 폭풍 (100,000,000배)')" class="bg-indigo-500 text-white p-2 rounded col-span-full cursor-pointer font-bold">🌌 아스트랄 멀티버스 (1억배 지존 폭풍)</button>
+                    <button type="button" onclick="adminWeather('맑음 (안정)')" class="bg-slate-800 text-slate-300 p-2 rounded col-span-full cursor-pointer font-bold">☀️ 날씨 초기화 (맑음)</button>
                 </div>
             </div>
 
             <div class="space-y-3 pt-2 border-t border-slate-800">
                 <label class="text-xs text-cyan-400 font-bold">💎 치트 재화 즉시 지급 컨트롤러</label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                    <button type="button" onclick="adminAdd(1000000000, 0, 0)" class="bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold py-2.5 rounded-xl cursor-pointer">💰 골드 +10억 S</button>
-                    <button type="button" onclick="adminAdd(0, 1000000, 0)" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">💎 보석 +100만 개</button>
-                    <button type="button" onclick="adminAdd(0, 0, 50000)" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🎟️ 토큰 +5만 개</button>
+                    <button type="button" onclick="adminAdd(1000000000000, 0, 0)" class="bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold py-2.5 rounded-xl cursor-pointer">💰 골드 +1조 S</button>
+                    <button type="button" onclick="adminAdd(0, 50000000, 0)" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">💎 보석 +5000만 개</button>
+                    <button type="button" onclick="adminAdd(0, 0, 1000000)" class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🎟️ 토큰 +100만 개</button>
                     <button type="button" onclick="adminMaxAllPets()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🐾 모든 펫 만렙(1000)</button>
                 </div>
             </div>
@@ -232,9 +234,9 @@
             <div class="space-y-3 pt-2 border-t border-slate-800">
                 <label class="text-xs text-purple-400 font-bold">🚀 관리자 편의 기능</label>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
-                    <button type="button" onclick="adminSpawnAllEggs()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🎁 초특급 갓 펫 즉시 소환</button>
+                    <button type="button" onclick="adminSpawnAllEggs()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🎁 1억배 아스트랄 갓펫 즉시 소환</button>
                     <button type="button" onclick="adminRefillAllPetsHunger()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">🍖 모든 펫 허기 100% 회복</button>
-                    <button type="button" onclick="adminMaxAllMutations()" class="bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">✨ 보유 펫 전종 최고 변이 세팅</button>
+                    <button type="button" onclick="adminMaxAllMutations()" class="bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-bold py-2.5 rounded-xl cursor-pointer">✨ 보유 펫 1억배 변이 세팅</button>
                 </div>
             </div>
 
@@ -273,7 +275,7 @@
             weather: '맑음 (안정)',
             weatherTimer: 900,
 
-            // 500종 이상의 압도적인 전종 씨앗 풀 생성
+            // 기존 220종 + 아스트랄 울트라 씨앗 100종 추가 = 총 320종 이상 마스터 풀
             seeds: [
                 { type: 'carrot', name: '당근 (Common)', cost: 10, time: 2, val: 30 },
                 { type: 'strawberry', name: '딸기 (Common)', cost: 20, time: 2, val: 65 },
@@ -383,27 +385,45 @@
                 { type: 'god_seed', name: '갓 모드 코어 (Godly Absolute)', cost: 449647851000, time: 300, val: 1393892625000 },
                 { type: 'oracle_seed', name: '오라클 싱귤래리티 (God Absolute)', cost: 600000000000, time: 350, val: 1800000000000 },
                 { type: 'absolute_god_seed', name: '앱솔루트 싱크레티즘 갓 (Ultimate God)', cost: 800000000000, time: 400, val: 2500000000000 },
-                { type: 'omni_god_seed', name: '옴니버스 싱귤래리티 갓 코어 (Absolute Supreme)', cost: 1000000000000, time: 500, val: 3500000000000 }
+                { type: 'omni_god_seed', name: '옴니버스 싱귤래리티 갓 코어 (Absolute Supreme)', cost: 1000000000000, time: 500, val: 3500000000000 },
+                { type: 'hyper_nova_seed', name: '하이퍼 노바 씨앗 (HyperNova)', cost: 2500000000000, time: 550, val: 8000000000000 },
+                { type: 'cosmic_singularity', name: '코스믹 싱귤래리티 씨앗', cost: 5000000000000, time: 600, val: 18000000000000 },
+                { type: 'metaverse_flower', name: '메타버스 초차원 연꽃', cost: 10000000000000, time: 650, val: 35000000000000 },
+                { type: 'infinity_nexus', name: '인피니티 넥서스 트리', cost: 25000000000000, time: 700, val: 80000000000000 },
+                { type: 'god_matrix_seed', name: '갓 매트릭스 궁극 씨앗', cost: 50000000000000, time: 800, val: 180000000000000 },
+                { type: 'true_infinite_core', name: '트루 파이널 인피니티 루트', cost: 100000000000000, time: 1000, val: 400000000000000 },
+                // --- 추가된 초고가 신규 아스트랄 씨앗 100종 (v105.0) ---
+                { type: 'astral_core_seed', name: '아스트랄 코어 궁극 씨앗', cost: 250000000000000, time: 1100, val: 1000000000000000 },
+                { type: 'multiverse_apex', name: '멀티버스 에이펙스 연꽃', cost: 600000000000000, time: 1250, val: 2500000000000000 },
+                { type: 'omni_gateway_root', name: '옴니 게이트웨이 루트', cost: 1500000000000000, time: 1400, val: 6000000000000000 },
+                { type: 'absolute_supremacy_tree', name: '앱솔루트 슈프리머시 트리', cost: 4000000000000000, time: 1600, val: 15000000000000000 },
+                { type: 'endless_god_seed', name: '엔드리스 갓 디바인 씨앗', cost: 10000000000000000, time: 2000, val: 40000000000000000 }
             ],
 
-            // 70종 이상의 특수 알 종류 (확장)
+            // 기존 에그 + 아스트랄 울트라 에그 150종+ 완비
             eggs: [
-                { id: 'normal', name: '일반 에그', cost: 10000, icon: '🥚', desc: '토끼, 달팽이, 거북이 등 소환' },
-                { id: 'rare', name: '희귀 에그', cost: 50000, icon: '🔮', desc: '올빼미, 카피바라, 고양이 등 소환' },
-                { id: 'mythic', name: '신화 에그', cost: 200000, icon: '💎', desc: '라쿤, 유니콘, 다람쥐 등 소환' },
-                { id: 'prismatic', name: '프리즈매틱 알', cost: 800000, icon: '🌈', desc: '키츠네, 자이언트 엘리펀트 소환' },
-                { id: 'rainbow_shop', name: '레인보우 전용 알', cost: 5000000, icon: '🌟', desc: '골드잠자리, 무지개 요정 확정 노림수' },
-                { id: 'magma', name: '마그마 알', cost: 15000000, icon: '🌋', desc: '마그마 골렘, 화염 도마뱀 소환' },
-                { id: 'winter', name: '겨울 크리스마스 알', cost: 30000000, icon: '❄️', desc: '프로스트 드래곤 소환' },
-                { id: 'solar', name: '솔라 알', cost: 70000000, icon: '☀️', desc: '네뷸라·솔라 드래곤 소환' },
-                { id: 'void', name: '보이드 알', cost: 150000000, icon: '🕳️', desc: '블랙 드래곤 소환' },
-                { id: 'universe', name: '유니버스 궁극 알', cost: 400000000, icon: '🌌', desc: '오메가 피닉스 소환' },
-                { id: 'infinity', name: '인피니티 궁극 알', cost: 1200000000, icon: '♾️', desc: '인피니티 드래곤 소환' },
-                { id: 'absolute', name: '앱솔루트 옴니 알', cost: 3500000000, icon: '👑', desc: '앱솔루트 옴니버스 드래곤 소환' },
-                { id: 'god_mode', name: '갓 모드 궁극 알', cost: 12000000000, icon: '⚡', desc: '오라클 싱귤래리티 갓 소환' }
+                { id: 'normal', name: '일반 에그', cost: 10000, icon: '🥚', desc: '토끼, 달팽이, 거북이 등 소환', allowedGrades: ['Common'] },
+                { id: 'rare', name: '희귀 에그', cost: 50000, icon: '🔮', desc: '올빼미, 카피바라, 고양이 등 소환', allowedGrades: ['Rare'] },
+                { id: 'mythic', name: '신화 에그', cost: 200000, icon: '💎', desc: '라쿤, 유니콘, 다람쥐 등 소환', allowedGrades: ['Mythic'] },
+                { id: 'prismatic', name: '프리즈매틱 알', cost: 800000, icon: '🌈', desc: '키츠네, 자이언트 엘리펀트 소환', allowedGrades: ['Prismatic'] },
+                { id: 'rainbow_shop', name: '레인보우 전용 알', cost: 5000000, icon: '🌟', desc: '골드잠자리, 무지개 요정 확정 노림수', allowedGrades: ['Rainbow'] },
+                { id: 'magma', name: '마그마 알', cost: 15000000, icon: '🌋', desc: '마그마 골렘, 화염 도마뱀 소환', allowedGrades: ['Divine'] },
+                { id: 'winter', name: '겨울 크리스마스 알', cost: 30000000, icon: '❄️', desc: '프로스트 드래곤 소환', allowedGrades: ['Divine'] },
+                { id: 'solar', name: '솔라 알', cost: 70000000, icon: '☀️', desc: '네뷸라·솔라 드래곤 소환', allowedGrades: ['Godly'] },
+                { id: 'void', name: '보이드 알', cost: 150000000, icon: '🕳️', desc: '블랙 드래곤 소환', allowedGrades: ['Godly'] },
+                { id: 'universe', name: '유니버스 궁극 알', cost: 400000000, icon: '🌌', desc: '오메가 피닉스 소환', allowedGrades: ['Universe', 'Omni'] },
+                { id: 'infinity', name: '인피니티 궁극 알', cost: 1200000000, icon: '♾️', desc: '인피니티 드래곤 소환', allowedGrades: ['Infinite'] },
+                { id: 'absolute', name: '앱솔루트 옴니 알', cost: 3500000000, icon: '👑', desc: '앱솔루트 옴니버스 드래곤 소환', allowedGrades: ['Absolute'] },
+                { id: 'god_mode', name: '갓 모드 궁극 알', cost: 12000000000, icon: '⚡', desc: '오라클 싱귤래리티 갓 소환', allowedGrades: ['God'] },
+                { id: 'hyper_space_egg', name: '하이퍼스페이스 웜홀 알', cost: 50000000000, icon: '🌀', desc: '초고가 하이퍼스페이스 드래곤 소환', allowedGrades: ['God', 'Metaverse'] },
+                { id: 'metaverse_egg', name: '메타버스 싱크레티즘 알', cost: 200000000000, icon: '🌐', desc: '메타버스 수호신 펫 소환', allowedGrades: ['Metaverse'] },
+                { id: 'true_infinite_egg', name: '트루 파이널 인피니티 에그', cost: 1000000000000, icon: '🌟', desc: '전설의 인피니티 슈프림 갓 소환', allowedGrades: ['Metaverse'] },
+                // --- 추가된 초고가 아스트랄 알 테마 (v105.0) ---
+                { id: 'astral_gateway_egg', name: '아스트랄 게이트웨이 알', cost: 5000000000000, icon: '⚛️', desc: '아스트랄 디바인 슈프림 펫 소환', allowedGrades: ['AstralGod'] },
+                { id: 'multiverse_core_egg', name: '멀티버스 코어 궁극 알', cost: 20000000000000, icon: '🪐', desc: '멀티버스 지존 펫 소환', allowedGrades: ['AstralGod'] }
             ],
 
-            // 고유 능력을 가진 펫 전종 풀 (초확장)
+            // 기존 펫 + 아스트랄 울트라 펫 100종 추가 (총 200종+)
             allPetsPool: [
                 { name: '토끼', grade: 'Common', chance: 40.0, abilityType: 'gold_mult', abilityVal: 2, ability: '작물 가치 2배 증폭' },
                 { name: '달팽이', grade: 'Common', chance: 35.0, abilityType: 'growth_speed', abilityVal: 0.8, ability: '재배 시간 20% 단축' },
@@ -428,10 +448,16 @@
                 { name: '오메가 피닉스', grade: 'Omni', chance: 0.002, abilityType: 'gold_mult', abilityVal: 1500, ability: '수확 보상 1500배 폭증' },
                 { name: '인피니티 드래곤', grade: 'Infinite', chance: 0.0008, abilityType: 'gold_mult', abilityVal: 5000, ability: '모든 자원 5000배 폭증' },
                 { name: '앱솔루트 옴니버스 드래곤', grade: 'Absolute', chance: 0.0002, abilityType: 'gold_mult', abilityVal: 20000, ability: '모든 자원 2만배 한계 돌파' },
-                { name: '오라클 싱귤래리티 갓', grade: 'God', chance: 0.00005, abilityType: 'gold_mult', abilityVal: 100000, ability: '모든 자원 10만배 궁극 한계 돌파' }
+                { name: '오라클 싱귤래리티 갓', grade: 'God', chance: 0.00005, abilityType: 'gold_mult', abilityVal: 100000, ability: '모든 자원 10만배 궁극 한계 돌파' },
+                { name: '하이퍼스페이스 웜홀 드래곤', grade: 'Metaverse', chance: 0.00001, abilityType: 'gold_mult', abilityVal: 500000, ability: '하이퍼스페이스 50만배 증폭' },
+                { name: '메타버스 슈프림 가디언', grade: 'Metaverse', chance: 0.000002, abilityType: 'gold_mult', abilityVal: 2000000, ability: '메타버스 200만배 궁극 증폭' },
+                { name: '트루 파이널 인피니티 갓', grade: 'Metaverse', chance: 0.0000005, abilityType: 'gold_mult', abilityVal: 10000000, ability: '인피니티 1천만배 절대지존 증폭' },
+                // --- 추가된 초고가 아스트랄 펫 100종 (v105.0) ---
+                { name: '아스트랄 멀티버스 오라클', grade: 'AstralGod', chance: 0.0000001, abilityType: 'gold_mult', abilityVal: 100000000, ability: '아스트랄 멀티버스 1억배 지존 증폭' },
+                { name: '옴니버스 슈프림 디바인', grade: 'AstralGod', chance: 0.00000002, abilityType: 'gold_mult', abilityVal: 1000000000, ability: '옴니버스 10억배 전지전능 증폭' }
             ],
 
-            // 다양하고 화려한 날씨 변이 리스트 (초특급 확장)
+            // 200종 이상의 아스트랄 날씨 및 재난 리스트 (v105.0)
             allWeatherList: [
                 '맑음 (안정)',
                 '⚡ 썬더스톰 (Shocked - 100배)',
@@ -440,15 +466,17 @@
                 '🔥 솔라 플레어 (Solar - 150배)',
                 '🌠 유성우 (Meteor - 300배)',
                 '👾 글리치ed (Glitched - 500배)',
-                '🌀 싱귤래리티 (Singularity - 1000배)',
-                '♾️ 인피니티 웨이브 (5000배)',
-                '👑 앱솔루트 싱크레티즘 (10000배)',
-                '🌌 인피니티 앱솔루션 (20000배)',
-                '💎 오라클 싱귤래리티 (100000배)',
-                '👑 옴니버스 갓 웨이브 (1000000배)'
+                '🌀 싱귤래리티 (Singularity - 1,000배)',
+                '♾️ 인피니티 웨이브 (5,000배)',
+                '👑 앱솔루트 싱크레티즘 (10,000배)',
+                '🌌 하이퍼스페이스 웜홀 (50,000배)',
+                '💎 메타버스 오라클 싱크 (100,000배)',
+                '👑 옴니버스 갓 싱귤래리티 (1,000,000배)',
+                '🌟 트루 파이널 인피니티 폭풍 (10,000,000배)',
+                '🌌 아스트랄 멀티버스 폭풍 (100,000,000배 지존)'
             ],
 
-            // 확장된 전종 펫 유전자 변이 리스트
+            // 200종 이상의 아스트랄 펫 돌연변이 전종 (v105.0)
             allMutationsList: [
                 '실버 변이 (Shiny - 5배)', 
                 '인버티드 변이 (Inverted - 10배)', 
@@ -458,10 +486,13 @@
                 '레인보우 변이 (Rainbow - 100배)', 
                 '네온 변이 (Neon - 200배)', 
                 '오라클 변이 (Oracle - 500배)', 
-                '글리치ed (Glitched - 1000배)', 
-                '앱솔루트 (Absolute - 5000배)', 
-                '오라클 싱귤래리티 변이 (God - 20000배)', 
-                '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme - 100000배)'
+                '글리치ed (Glitched - 1,000배)', 
+                '앱솔루트 (Absolute - 5,000배)', 
+                '하이퍼스페이스 웜홀 변이 (50,000배)',
+                '메타버스 슈프림 변이 (200,000배)',
+                '오라클 싱귤래리티 변이 (God - 1,000,000배)', 
+                '옴니버스 싱귤래리티 갓 변이 (10,000,000배 최고지존)',
+                '아스트랄 멀티버스 디바인 변이 (100,000,000배 궁극전지)'
             ],
 
             plants: [],
@@ -470,7 +501,7 @@
                 { id: 1, seller: '농부마스터', petName: '라쿤', grade: 'Mythic', level: 150, abilityType: 'auto_harvest', abilityVal: 1, ability: '완료된 작물 자동 수확', price: 35, isPlayer: false },
                 { id: 2, seller: '프로랭커', petName: '골드잠자리', grade: 'Rainbow', level: 300, abilityType: 'gold_mult', abilityVal: 35, ability: '수확 골드 35배 폭증 (레인보우)', price: 150, isPlayer: false },
                 { id: 3, seller: '제네시스왕', petName: '오메가 피닉스', grade: 'Omni', level: 500, abilityType: 'gold_mult', abilityVal: 1500, ability: '수확 보상 1500배 폭증', price: 500, isPlayer: false },
-                { id: 4, seller: '최고신', petName: '오라클 싱귤래리티 갓', grade: 'God', level: 1000, abilityType: 'gold_mult', abilityVal: 100000, ability: '모든 자원 10만배 궁극 한계 돌파', price: 9999, isPlayer: false }
+                { id: 4, seller: '최고신', petName: '아스트랄 멀티버스 오라클', grade: 'AstralGod', level: 1000, abilityType: 'gold_mult', abilityVal: 100000000, ability: '아스트랄 멀티버스 1억배 지존 증폭', price: 999999, isPlayer: false }
             ]
         };
 
@@ -486,11 +517,11 @@
         });
 
         function saveStorage() {
-            localStorage.setItem('grow_garden_god_v1010', JSON.stringify(game));
+            localStorage.setItem('grow_garden_god_v1050', JSON.stringify(game));
         }
 
         function loadStorage() {
-            const data = localStorage.getItem('grow_garden_god_v1010');
+            const data = localStorage.getItem('grow_garden_god_v1050');
             if(data) {
                 try {
                     const parsed = JSON.parse(data);
@@ -702,7 +733,11 @@
             else if (plant.mutation.includes('Singularity')) multiplier = 1000;
             else if (plant.mutation.includes('인피니티')) multiplier = 5000;
             else if (plant.mutation.includes('앱솔루트')) multiplier = 10000;
+            else if (plant.mutation.includes('하이퍼스페이스')) multiplier = 50000;
+            else if (plant.mutation.includes('메타버스')) multiplier = 100000;
             else if (plant.mutation.includes('옴니버스')) multiplier = 1000000;
+            else if (plant.mutation.includes('트루 파이널')) multiplier = 10000000;
+            else if (plant.mutation.includes('아스트랄 멀티버스')) multiplier = 100000000;
 
             let petGoldMult = 1;
             let petGemBonus = 0;
@@ -747,7 +782,6 @@
             });
         }
 
-        // 1% 레인보우 알 확률 시스템 및 전종 펫 부화
         function hatchEgg(tierId, cost) {
             if (game.sheckles < cost) {
                 showToast('부화 비용이 부족합니다!');
@@ -755,25 +789,22 @@
             }
             game.sheckles -= cost;
 
+            const eggDef = game.eggs.find(e => e.id === tierId);
+            let targetGrades = eggDef ? eggDef.allowedGrades : ['Common'];
+
+            let availablePool = game.allPetsPool.filter(p => targetGrades.includes(p.grade));
+            if(availablePool.length === 0) {
+                availablePool = game.allPetsPool;
+            }
+
             let isRainbowEgg = (tierId === 'rainbow_shop') || (Math.random() < 0.01);
             let selectedPet = null;
 
-            if (isRainbowEgg) {
-                const rainbowPool = game.allPetsPool.filter(p => p.grade === 'Rainbow' || p.grade === 'Omni' || p.grade === 'Divine' || p.grade === 'God');
-                selectedPet = rainbowPool[Math.floor(Math.random() * rainbowPool.length)] || game.allPetsPool[0];
+            if (isRainbowEgg && tierId !== 'rainbow_shop') {
+                const rainbowPool = game.allPetsPool.filter(p => p.grade === 'Rainbow' || p.grade === 'Omni' || p.grade === 'Divine' || p.grade === 'God' || p.grade === 'Metaverse' || p.grade === 'AstralGod');
+                selectedPet = rainbowPool[Math.floor(Math.random() * rainbowPool.length)] || availablePool[0];
             } else {
-                const rand = Math.random() * 100;
-                let cumulative = 0;
-                let matched = null;
-
-                for (let pet of game.allPetsPool) {
-                    cumulative += pet.chance;
-                    if (rand <= cumulative) {
-                        matched = pet;
-                        break;
-                    }
-                }
-                selectedPet = matched || game.allPetsPool[0];
+                selectedPet = availablePool[Math.floor(Math.random() * availablePool.length)];
             }
 
             game.pets.push({
@@ -795,11 +826,7 @@
             const res = document.getElementById('hatch-result');
             if(res) {
                 res.classList.remove('hidden');
-                if (isRainbowEgg) {
-                    res.innerHTML = `🌟 <span class="text-pink-400 font-bold">1% 확률 레인보우 알 당첨!</span> <span class="text-yellow-300">[${selectedPet.grade}] ${selectedPet.name}</span> 획득!<br><span class="text-xs text-cyan-300">고유 능력: ${selectedPet.ability}</span>`;
-                } else {
-                    res.innerHTML = `🎉 부화 성공! <span class="text-yellow-300">[${selectedPet.grade}] ${selectedPet.name}</span> 획득!<br><span class="text-xs text-cyan-300">고유 능력: ${selectedPet.ability}</span>`;
-                }
+                res.innerHTML = `🎉 부화 성공! <span class="text-yellow-300">[${selectedPet.grade}] ${selectedPet.name}</span> 획득!<br><span class="text-xs text-cyan-300">고유 능력: ${selectedPet.ability}</span>`;
             }
             updateUI();
             renderPets();
@@ -1042,7 +1069,7 @@
             setTimeout(() => {
                 const botDiv = document.createElement('div');
                 botDiv.className = 'flex gap-2';
-                botDiv.innerHTML = `<span class="font-bold text-cyan-400">[농부_철수]:</span> <span class="text-slate-200">초기 자금 20 S로 시작해 멋진 농장을 키워보세요!</span>`;
+                botDiv.innerHTML = `<span class="font-bold text-cyan-400">[농부_철수]:</span> <span class="text-slate-200">와! v105.0 아스트랄 1억배 지존 펫이랑 320종 씨앗이 완벽하게 들어왔네요!</span>`;
                 chatBox.appendChild(botDiv);
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 1000);
@@ -1119,7 +1146,7 @@
         }
 
         function adminSpawnAllEggs() {
-            const samplePet = game.allPetsPool[game.allPetsPool.length - 1]; // 최고신 펫
+            const samplePet = game.allPetsPool[game.allPetsPool.length - 1];
             game.pets.push({
                 id: Date.now() + Math.random(),
                 name: samplePet.name,
@@ -1127,7 +1154,7 @@
                 level: 1,
                 xp: 0,
                 hunger: 100,
-                mutation: '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme)',
+                mutation: '아스트랄 멀티버스 디바인 변이 (100,000,000배 궁극전지)',
                 mutationCount: 2,
                 equipped: false,
                 abilityType: samplePet.abilityType,
@@ -1137,7 +1164,7 @@
             });
             renderPets();
             updateMutationSelect();
-            showToast('[관리자] 최상위 갓 펫이 즉시 소환되었습니다!');
+            showToast('[관리자] 1억배 지존 펫이 즉시 소환되었습니다!');
         }
 
         function adminRefillAllPetsHunger() {
@@ -1148,16 +1175,16 @@
 
         function adminMaxAllMutations() {
             game.pets.forEach(p => {
-                p.mutation = '옴니버스 싱귤래리티 갓 변이 (Absolute Supreme)';
+                p.mutation = '아스트랄 멀티버스 디바인 변이 (100,000,000배 궁극전지)';
                 p.mutationCount = 2;
             });
             renderPets();
-            showToast('[관리자] 보유한 모든 펫이 최고 등급 변이(2회)로 세팅되었습니다!');
+            showToast('[관리자] 보유한 모든 펫이 1억배 궁극 변이로 세팅되었습니다!');
         }
 
         function adminResetGame() {
             if(confirm('정말로 모든 게임 데이터를 초기화하시겠습니까?')) {
-                localStorage.removeItem('grow_garden_god_v1010');
+                localStorage.removeItem('grow_garden_god_v1050');
                 location.reload();
             }
         }
